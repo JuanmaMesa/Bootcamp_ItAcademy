@@ -6,9 +6,11 @@ Para hacer esto correctamente, es importante entender cómo se diseñan las base
 
 
 
+
 Objetivos Generales
 ---
 Diseñar y modelar estructuras de datos en bases de datos relacionales o SQL, así como en bases de datos documentales o NoSQL.
+
 
 Objetivos Específicos
 ---
