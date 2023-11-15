@@ -2,7 +2,7 @@
 
 En este Sprint, vamos a hablar sobre cómo las aplicaciones de negocios necesitan almacenar y buscar información en algún tipo de sistema de almacenamiento.
 
-Para hacer esto correctamente, es importante entender cómo se diseñan las bases de datos. En este Sprint, aprenderás a crear y organizar datos de manera efectiva.
+Para hacer esto correctamente, es importante entender cómo se diseñan las bases de datos. En este Sprint, aprenderemos a crear y organizar datos de manera efectiva.
 
 
 
