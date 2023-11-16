@@ -78,13 +78,14 @@ db.restaurants.find({}).sort({name: 1})
 db.restaurants.find({}).sort({name: -1})
 
 //27.Escriu una consulta per organitzar el nom de la cuisine en ordre ascendent i pel mateix barri de cuisine. Ordre descendent.
-db.restaurants.find({}).sort({name: -1})
+db.restaurants.find().sort({cuisine: 1, borough: -1})
 
 //28.Escriu una consulta per saber totes les direccions que no contenen el carrer.
+db.restaurants.find({ address: { $ne: "address.street"}})
 
 //29.Escriu una consulta que seleccionarà tots els documents en la col·lecció de restaurants on el valor del camp coord és Double.
+db.restaurant.find({ "address.coord": {$type: "double"}});
 
-//30.Escriu una consulta que seleccionarà el restaurant_id, name i grade per a aquells restaurants que retornin 0 com a resta després de dividir el marcador per 7.
 
 
 
