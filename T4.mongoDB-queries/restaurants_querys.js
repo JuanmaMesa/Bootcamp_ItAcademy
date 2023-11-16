@@ -66,15 +66,19 @@ db.restaurants.find({$or: [{cuisine: "Fish", name: /^Wil/, cuisine: {$nin: ["Ame
 db.restaurants.find({"grades.date": ISODate("2014-08-11T00:00:00Z"), "grades.grade": "A", "grades.score": 11}, {restaurant_id: 1, name: 1, grades: 1, _id: 0})
 
 //23.Escriu una consulta per trobar el restaurant_id, name i grades per a aquells restaurants on el 2n element de varietat de graus conté un grau de "A" i marcador 9 sobre un ISODate "2014-08-11T00:00:00Z".
+db.restaurants.find({"grades.1.date": ISODate("2014-08-11T00:00:00Z"), "grades.1.grade": "A", "grades.1.score": 9}, {restaurant_id: 1, name: 1, grades: 1, _id: 0})
 
 //24.Escriu una consulta per trobar el restaurant_id, name, adreça i ubicació geogràfica per a aquells restaurants on el segon element del array coord conté un valor que és més de 42 i fins a 52.
+db.restaurants.find({"address.coord.1": {$gt:42, $lt:53}}, {restaurant_id:1, name:1, address:1, _id:0})
 
 //25.Escriu una consulta per organitzar el nom dels restaurants en ordre ascendent juntament amb totes les columnes.
-
+db.restaurants.find({}).sort({name: 1})
 
 //26.Escriu una consulta per organitzar el nom dels restaurants en ordre descendent juntament amb totes les columnes.
+db.restaurants.find({}).sort({name: -1})
 
 //27.Escriu una consulta per organitzar el nom de la cuisine en ordre ascendent i pel mateix barri de cuisine. Ordre descendent.
+db.restaurants.find({}).sort({name: -1})
 
 //28.Escriu una consulta per saber totes les direccions que no contenen el carrer.
 
