@@ -4,4 +4,4 @@ public abstract class AbstractFactory {
 	
 	abstract Gestor getGestor(String gestorType);
 
-}
+}//todo
