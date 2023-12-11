@@ -4,13 +4,14 @@ import tasca1_Patterns1.nivell2_AbstractFactory.interfaces.PhoneManager;
 
 public class SpainAddress implements PhoneManager {
 
-	private String address;
+	private  final static String spain = "Spain adress: "; 
+	String address ;
 	private String phoneNumber;
 	
 	
 	@Override
 	public void createAddress(String address) {
-		this.address = "Spain adrress: "+address;
+		this.address = spain + address;
 	
 		
 	}

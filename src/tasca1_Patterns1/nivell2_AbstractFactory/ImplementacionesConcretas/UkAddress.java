@@ -6,12 +6,12 @@ public class UkAddress implements PhoneManager {
 
 	private String address;
 	private String phoneNumber;
-	
+	private  final static String uk = "UK adress: "; 
 
 
 	@Override
 	public void createAddress(String address) {
-		this.address = "Uk address: "+address;
+		this.address = uk + address;
 		
 }
 
