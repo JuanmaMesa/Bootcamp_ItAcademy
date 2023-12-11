@@ -2,7 +2,7 @@ package tasca1_Patterns1.nivell1_Singleton;
 
 import java.util.ArrayList;
 
-public class Undo {
+public final class Undo {
 	
 	private static Undo instance;
 	private  ArrayList<String>history;
