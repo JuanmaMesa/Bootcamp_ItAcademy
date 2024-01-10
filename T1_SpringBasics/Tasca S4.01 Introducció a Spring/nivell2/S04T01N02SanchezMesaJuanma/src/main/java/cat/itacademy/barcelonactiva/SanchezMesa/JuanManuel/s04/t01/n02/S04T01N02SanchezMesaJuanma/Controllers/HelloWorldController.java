@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloWorldController {
 
     @GetMapping("/HelloWorld")
-    public String Hello(@RequestParam(name = "nom", defaultValue = "UNKNONW") String nom){
-        return "Hola, "+ nom + ". Estas ejecutando un proyecto Gradle";
+    public String Hello(@RequestParam(name = "name", defaultValue = "UNKNONW") String otherName){
+        return "Hola, "+ otherName + ". Estas ejecutando un proyecto Gradle";
 
     }
 
-    @GetMapping(value = {"/HelloWorld2","/HelloWorld2/{nom}"})
-    public String Hello2(@PathVariable(name = "nom", required = false) String nom){
+    @GetMapping(value = {"/HelloWorld2","/HelloWorld2/{name}"})
+    public String Hello2(@PathVariable(name = "name", required = false) String name){
 
-        if(nom == null){
-            nom = "UNKONWN";
+        if(name == null){
+            name = "UNKONWN";
         }
-        return "Hola "+ nom + ". Estas ejecutando un proyecto Gradle";
+        return "Hola "+ name + ". Estas ejecutando un proyecto Gradle";
 
     }
 

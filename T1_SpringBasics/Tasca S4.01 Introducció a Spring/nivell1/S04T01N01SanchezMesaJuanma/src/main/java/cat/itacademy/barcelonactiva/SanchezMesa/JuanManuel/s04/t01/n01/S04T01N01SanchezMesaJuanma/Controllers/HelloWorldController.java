@@ -16,14 +16,13 @@ public class HelloWorldController {
     User user = new User();
     @GetMapping("/HelloWorld")
     public String Hello (@RequestParam( name = "name", defaultValue = "UNKNOWN")String name){
-       // User user = new User();
          user.setName(name);
 
         return "Hola, "+ user.getName()+ ". Estas ejecutando un proyecto Maven. ";
     }
 
-    @GetMapping(value = {"/HelloWorld2",   "/HelloWorld2/{nom}"})
-    public String Hello2(@PathVariable (name = "nom", required = false) String name){
+    @GetMapping(value = {"/HelloWorld2",   "/HelloWorld2/{name}"})
+    public String Hello2(@PathVariable (name = "name", required = false) String name){
         if(name == null){
             user.setName("UNKNOWN");
 
