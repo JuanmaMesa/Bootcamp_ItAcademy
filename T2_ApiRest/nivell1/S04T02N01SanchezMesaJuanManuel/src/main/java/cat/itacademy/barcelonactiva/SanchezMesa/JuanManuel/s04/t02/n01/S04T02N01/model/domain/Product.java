@@ -9,7 +9,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private int numberKg;
+    private Integer numberKg;// Integer -> permitimos que sea nul en h2
 
 
     public int getId() {
@@ -17,7 +17,7 @@ public class Product {
     }
 
     public void setId(int id) {
-        this.id = this.id;
+        this.id = id;
     }
 
     public String getName() {
