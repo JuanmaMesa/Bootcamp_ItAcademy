@@ -1,6 +1,5 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.services;
 
-
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.domain.Product;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +37,8 @@ public class ProductServiceJpa implements ProductService {
         }));
 
         return productdb;
-
-
     }
+
     @Transactional
     @Override
     public Optional<Product> update(int id, Product product) {
@@ -49,8 +47,8 @@ public class ProductServiceJpa implements ProductService {
             Product productDb = productOptional.orElseThrow();
 
             productDb.setName(product.getName());
-
             productDb.setNumberKg(product.getNumberKg());
+
             return Optional.of(repository.save(productDb));
 
         }
