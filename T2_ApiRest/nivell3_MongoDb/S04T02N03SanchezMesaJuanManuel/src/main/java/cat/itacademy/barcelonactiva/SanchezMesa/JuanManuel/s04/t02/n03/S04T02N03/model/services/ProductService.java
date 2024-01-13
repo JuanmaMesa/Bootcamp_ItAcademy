@@ -8,10 +8,10 @@ import java.util.Optional;
 public interface ProductService {
     List<Product> findAll();
 
-    Optional<Product> findById(int id);
+    Optional<Product> findById(String id);
     Product save(Product product);
-    Optional delete(int id);
-    Optional<Product> update(int id, Product product);
+    Optional delete(String id);
+    Optional<Product> update(String id, Product product);
 
 
 

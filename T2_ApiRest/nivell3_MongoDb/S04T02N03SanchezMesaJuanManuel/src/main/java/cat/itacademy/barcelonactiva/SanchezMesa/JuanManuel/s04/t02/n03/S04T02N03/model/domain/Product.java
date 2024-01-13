@@ -1,22 +1,25 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n03.S04T02N03.model.domain;
 
-import jakarta.persistence.*;
+import jdk.jfr.DataAmount;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="products")
+
+
+@Document(collection="Mercado")
+
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
     private String name;
-    private Integer numberKg;// Integer -> permitimos que sea nul en h2
+    private Integer numberKg;// Integer -> permitimos que sea nul
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

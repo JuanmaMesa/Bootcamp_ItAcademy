@@ -6,8 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends CrudRepository<Product, String> {
 
 
-    Optional<Product> findById(long id);
+    Optional<Product> findById(String id);
 }

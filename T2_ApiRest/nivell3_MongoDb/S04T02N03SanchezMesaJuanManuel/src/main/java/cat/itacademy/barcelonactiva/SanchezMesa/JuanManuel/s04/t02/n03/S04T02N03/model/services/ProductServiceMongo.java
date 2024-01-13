@@ -10,27 +10,26 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceJpa implements ProductService {
+public class ProductServiceMongo implements ProductService {
     @Autowired
     private ProductRepository repository;
-    @Transactional(readOnly = true)
     @Override
     public List<Product> findAll() {
         return (List<Product>) repository.findAll();
     }
-    @Transactional(readOnly = true)
+
     @Override
-    public Optional<Product> findById(int id) {
-        return repository.findById((long) id);
+    public Optional<Product> findById(String id) {
+        return repository.findById( id);
     }
-    @Transactional
+
     @Override
     public Product save(Product product) {
         return repository.save(product);
     }
-    @Transactional
+
     @Override
-    public Optional<Product> delete(int id) {
+    public Optional<Product> delete(String id) {
         Optional<Product> productdb = repository.findById(id);
         productdb.ifPresent((product -> {
             repository.delete(product);
@@ -39,9 +38,8 @@ public class ProductServiceJpa implements ProductService {
         return productdb;
     }
 
-    @Transactional
     @Override
-    public Optional<Product> update(int id, Product product) {
+    public Optional<Product> update(String id, Product product) {
         Optional<Product> productOptional = repository.findById(id);
         if (productOptional.isPresent()) {
             Product productDb = productOptional.orElseThrow();
