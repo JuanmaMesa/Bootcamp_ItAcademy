@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="Tasca1_Herencia"/>
+	<classpathentry kind="src" path="Laboratorio"/>
+	<classpathentry kind="src" path="Tasca2_Exceptions"/>
+	<classpathentry kind="src" path="Tasca3_JavaCollections"/>
+	<classpathentry kind="src" path="Tasca4_Testing"/>
+	<classpathentry excluding="n2exercici1/" kind="src" path="Tasca5_Java.IO"/>
+	<classpathentry kind="src" path="Tasca6_Generics"/>
+	<classpathentry kind="src" path="Tasca7_Annotations"/>
+	<classpathentry kind="src" path="Tasca8_Lambdas"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
