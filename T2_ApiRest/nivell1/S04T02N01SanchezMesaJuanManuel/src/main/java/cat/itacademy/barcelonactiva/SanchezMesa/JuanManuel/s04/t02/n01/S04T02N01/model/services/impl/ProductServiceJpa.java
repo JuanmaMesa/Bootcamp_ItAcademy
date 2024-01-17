@@ -1,7 +1,9 @@
-package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.services;
+package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.services.impl;
 
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.domain.Product;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.exceptions.ProductNotFoundException;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.repository.ProductRepository;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s04.t02.n01.S04T02N01.model.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +22,12 @@ public class ProductServiceJpa implements ProductService {
     }
     @Transactional(readOnly = true)
     @Override
-    public Optional<Product> findById(int id) {
-        return repository.findById((long) id);
+    public Product findById(int id)  {
+        return repository.findById(id)
+                .orElseThrow(() ->new ProductNotFoundException("Producto no encontrado"));
+
     }
+
     @Transactional
     @Override
     public Product save(Product product) {
@@ -30,13 +35,14 @@ public class ProductServiceJpa implements ProductService {
     }
     @Transactional
     @Override
-    public Optional<Product> delete(int id) {
-        Optional<Product> productdb = repository.findById(id);
-        productdb.ifPresent((product -> {
-            repository.delete(product);
-        }));
+    public String delete(int id) {
+        Product product = repository.findById(id)
+                .orElseThrow(()-> new ProductNotFoundException("Producto no encontrado con el id "+id));
+                repository.delete(product);
+                return "Producto eliminado con exito con el id: "+id;
 
-        return productdb;
+
+
     }
 
     @Transactional

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/Api/v1/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -30,33 +30,25 @@ public class ProductController {
 
     }
     @PutMapping ("/update/{id}")
-    public ResponseEntity<Product> update(@PathVariable int id, @RequestBody Product product){
-        //product.setId(id);
-        //return ResponseEntity.status(HttpStatus.CREATED).body(ProductService.save(product));
-
+    public ResponseEntity<Optional<Product>> update(@PathVariable int id, @RequestBody Product product){
         Optional<Product> productOptional = productService.update(id, product);
         if (productOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
+            return ResponseEntity.status(HttpStatus.CREATED).body(productOptional);
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable int id){
-        Optional<Product> productOptional = productService.delete(id);
-        if (productOptional.isPresent()) {
-            return ResponseEntity.ok(productOptional.orElseThrow());
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<String> deleteProduct(@PathVariable int id){
+
+        String responMessage = productService.delete(id);
+        return ResponseEntity.ok(responMessage);
     }
 
     @GetMapping("getOne/{id}")
     public ResponseEntity<?> view(@PathVariable int id){
-        Optional<Product> productOptional=productService.findById(id);
-        if (productOptional.isPresent()) {
-            return ResponseEntity.ok(productOptional.orElseThrow());
-        }
-        return ResponseEntity.notFound().build();
+        Product product = productService.findById(id);
+       return ResponseEntity.ok(product);
     }
 
 
