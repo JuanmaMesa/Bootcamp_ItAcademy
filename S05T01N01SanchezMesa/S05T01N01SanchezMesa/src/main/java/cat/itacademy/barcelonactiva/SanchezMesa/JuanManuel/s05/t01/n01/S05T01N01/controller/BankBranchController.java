@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequestMapping("Api/v1/Branch")
+@RequestMapping("api/v1/branch")
 public class BankBranchController {
     @Autowired
     private BankBranchService service;
