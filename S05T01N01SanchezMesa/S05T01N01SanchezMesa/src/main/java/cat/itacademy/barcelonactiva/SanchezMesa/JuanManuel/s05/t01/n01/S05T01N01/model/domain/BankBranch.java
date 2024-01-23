@@ -6,14 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class BranchOffice {
+public class BankBranch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pK_BranchID;
     private String nameBranch;
     private String countryBranch;
 
-    public BranchOffice(){
+    public BankBranch(){
 
     }
 
