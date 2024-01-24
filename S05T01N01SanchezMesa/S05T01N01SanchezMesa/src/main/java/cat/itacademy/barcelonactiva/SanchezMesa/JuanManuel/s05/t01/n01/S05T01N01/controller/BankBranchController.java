@@ -1,5 +1,6 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.controller;
 
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.domain.BankBranch;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.services.BankBranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,16 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-//@RequestMapping("api/v1/branch")
+@RequestMapping("api/v1/branch")
 public class BankBranchController {
     @Autowired
     private BankBranchService service;
 
-    @GetMapping("/f")
+    @GetMapping("/findAll")
     public String listBankBranch(Model model){
         model.addAttribute("branches", service.getAllBranch());
         return "branches";
 
+    }
+
+    @GetMapping("/add")
+    public String addNewBranch( Model model){
+        BankBranch bankBranch = new BankBranch();
+        model.addAttribute("branch", bankBranch);
+        return "createNewBranch";
     }
 
 

@@ -19,7 +19,10 @@
             </tr>
           </thead>
           <tbody>
-
+          <tr th: each ="branche :${branches} ">
+              <td th: text="${branche.name}"> Name </td>
+              <td th: text="${branche.country}"> Country </td>
+          </tr>
           </tbody>
 
       </table>
