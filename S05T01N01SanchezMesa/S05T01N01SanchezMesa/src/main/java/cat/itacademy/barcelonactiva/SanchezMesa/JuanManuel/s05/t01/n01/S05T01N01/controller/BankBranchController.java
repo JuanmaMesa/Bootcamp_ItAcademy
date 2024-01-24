@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequestMapping("api/v1/branch")
+//@RequestMapping("api/v1/branch")
 public class BankBranchController {
     @Autowired
     private BankBranchService service;
 
-    @GetMapping("findAll")
+    @GetMapping("/f")
     public String listBankBranch(Model model){
         model.addAttribute("branches", service.getAllBranch());
         return "branches";
