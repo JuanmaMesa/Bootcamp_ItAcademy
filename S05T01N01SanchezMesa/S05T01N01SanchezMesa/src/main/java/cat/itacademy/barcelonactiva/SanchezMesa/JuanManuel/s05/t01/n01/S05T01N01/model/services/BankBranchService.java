@@ -8,7 +8,7 @@ public interface BankBranchService {
 
     public List<BankBranch> getAllBranch();
     public BankBranch getOneBranch(Integer Id);
-    public void addBankBranch(BankBranch bankBranch);
+    public BankBranch addBankBranch(BankBranch bankBranch);
     public void updateBranch(BankBranch bankBranch);
     public void deleteBranch(Integer id);
     public BankBranch findByName(String nameBranch);

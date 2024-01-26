@@ -23,7 +23,8 @@ public class BankBranchServiceImpl implements BankBranchService {
     }
 
     @Override
-    public void addBankBranch(BankBranch bankBranch) {
+    public BankBranch addBankBranch(BankBranch bankBranch) {
+        return repository.save(bankBranch);
 
     }
 
