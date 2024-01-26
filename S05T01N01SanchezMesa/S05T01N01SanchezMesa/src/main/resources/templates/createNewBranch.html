@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
-    <div class = "container">
+
         <nav class = "navbar navbar-expand-md bg-dark navbar-dark" >
             <a class="navbar-brand" href="#"> App Gestor de Sucursales</a>
             <!--Navbar links-->
@@ -20,26 +20,35 @@
 
         </nav>
 
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-ms-6 container justify-content-center card">
+                    <h1 class="text-center"> Registro Sucursal</h1>
+                    <div class="card-body">
+                        <form th action="@{/branch}" th:object="${branch}" method="POST">
+                            <div class="form-group">
+                                <label>Name :</label>
+                                <input type="text" name="nameBranch" th:field="*{nameBranch}" class="form-control" placeholder="Your name is ..." required>
+                            </div>
+                            <div class="form-group">
+                                <label>Country :</label>
+                                <input type="text" name="country" th:field="*{countryBranch}" class="form-control" placeholder="Your Country is ..." required>
+                            </div>
 
-    </div>
+                        </form>
 
-  <div class="container">
-      <div clase="row">
-          <h1>Lista de las Sucursales</h1>
-      </div>
-      <table class="table table-striped table-bordered">
-          <thead class="table-dark">
-            <tr>
-                <th> Name </th>
-                <th> Country </th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
+                    </div>
+                </div>
 
-      </table>
+            </div>
 
-  </div>
+        </div>
+
+
+
+
+
 
 
 
