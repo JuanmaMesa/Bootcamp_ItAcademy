@@ -27,6 +27,10 @@ public class BankBranch {
         this.countryBranch = countryBranch;
     }
 
+    public BankBranch(String nameBranch, String countryBranch) {
+        this.nameBranch = nameBranch;
+        this.countryBranch = countryBranch;
+    }
 
     public Integer getPk_bankBranchId() {
         return pk_bankBranchId;
