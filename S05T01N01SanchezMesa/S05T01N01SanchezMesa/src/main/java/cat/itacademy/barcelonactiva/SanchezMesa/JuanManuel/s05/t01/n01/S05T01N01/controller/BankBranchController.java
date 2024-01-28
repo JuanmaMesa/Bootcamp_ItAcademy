@@ -30,16 +30,31 @@ public class BankBranchController {
     @PostMapping("/branches")
     public String addBankBranch(@ModelAttribute("branch") BankBranch bankBranch){
         service.addBankBranch(bankBranch);
-        return "redirect:branches";
+        return "redirect:/branches";
     }
 
-    /*@PostMapping("/branches")
-    public String addBankBranch(@ModelAttribute("branch") BankBranch bankBranch, Model model){
-        service.addBankBranch(bankBranch);
-        model.addAttribute("message", "Sucursal agregada con éxito");
-        return "confirmation"; // Asumiendo que tienes una vista llamada 'confirmation.html'
-    }*/
+    @GetMapping("branches/update/{id}")
+    public String showUpdateForm(@PathVariable Integer id, Model model){
+        model.addAttribute("branch", service.findById(id));
+        return "updateBranch";
 
+    }
+    @PostMapping("branches/{id}")
+    public String updateBranch(@PathVariable Integer id, @ModelAttribute("branch")BankBranch bankBranch, Model model){
+        BankBranch updateBanckBranch = service.findById(id);
+        updateBanckBranch.setPk_bankBranchId(id);
+        updateBanckBranch.setNameBranch(bankBranch.getNameBranch());
+        updateBanckBranch.setCountryBranch(bankBranch.getCountryBranch());
+        service.updateBranch(updateBanckBranch);
+
+        return "redirect:/branches";
+    }
+
+    @GetMapping("/branches/{id}")
+    public String deleteBranch(@PathVariable Integer id){
+        service.deleteBranch(id);
+        return "redirect:/branches";
+    }
 
 
 

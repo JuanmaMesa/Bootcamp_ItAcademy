@@ -9,9 +9,10 @@ public interface BankBranchService {
     public List<BankBranch> getAllBranch();
     public BankBranch getOneBranch(Integer Id);
     public BankBranch addBankBranch(BankBranch bankBranch);
-    public void updateBranch(BankBranch bankBranch);
+    public BankBranch updateBranch(BankBranch bankBranch);
     public void deleteBranch(Integer id);
     public BankBranch findByName(String nameBranch);
+    public BankBranch findById(Integer id);
 
 
 

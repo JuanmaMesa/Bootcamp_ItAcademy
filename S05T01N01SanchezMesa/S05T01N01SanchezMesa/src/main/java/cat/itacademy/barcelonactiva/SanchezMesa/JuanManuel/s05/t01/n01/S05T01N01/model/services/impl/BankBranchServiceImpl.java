@@ -29,18 +29,25 @@ public class BankBranchServiceImpl implements BankBranchService {
     }
 
     @Override
-    public void updateBranch(BankBranch bankBranch) {
-
+    public BankBranch updateBranch(BankBranch bankBranch) {
+        return repository.save(bankBranch);
     }
+
 
     @Override
     public void deleteBranch(Integer id) {
+        repository.deleteById(id);
 
     }
 
     @Override
     public BankBranch findByName(String nameBranch) {
-        return null;
+        return repository.findByNameBranch(nameBranch);
+    }
+
+    @Override
+    public BankBranch findById(Integer id) {
+        return repository.findById(id).get();
     }
 }
 
