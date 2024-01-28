@@ -38,8 +38,9 @@
               <td th:text="${branch.nameBranch}" > Name </td>
               <td th:text="${branch.countryBranch}"> Country </td>
               <td>
-                  <a class="btn btn-info"> Update </a>
-                  <a class="btn btn-danger"> Delete </a>
+                  <a th:href="@{/branches/update/{id}(id=${branch.pk_bankBranchId})}" class="btn btn-info"> Update </a>
+
+                  <a   class="btn btn-danger"> Delete </a>
               </td>
           </tr>
 
