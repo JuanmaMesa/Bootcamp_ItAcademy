@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class S05T01N01SanchezMesaApplication implements CommandLineRunner {
+public class S05T01N01SanchezMesaApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(S05T01N01SanchezMesaApplication.class, args);
@@ -16,15 +16,4 @@ public class S05T01N01SanchezMesaApplication implements CommandLineRunner {
 
 	@Autowired
 	private BankBranchRepository repository;
-	@Override
-	public void run(String... args) throws Exception {
-		/*BankBranch sucursal1 = new BankBranch("Bankiner", "Japon");
-		repository.save(sucursal1);
-
-		BankBranch sucursal2 = new BankBranch("ING", "China");
-		repository.save(sucursal2);
-
-		BankBranch sucursal3 = new BankBranch("Abanca", "Galicia");
-		repository.save(sucursal3);*/
-	}
 }
