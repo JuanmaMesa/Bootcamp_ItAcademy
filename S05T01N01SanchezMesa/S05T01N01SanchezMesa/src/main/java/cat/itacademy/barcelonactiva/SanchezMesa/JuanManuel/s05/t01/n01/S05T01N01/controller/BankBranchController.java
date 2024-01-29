@@ -50,7 +50,7 @@ public class BankBranchController {
         return "redirect:/branches";
     }
 
-    @GetMapping("/branches/{id}")
+    @GetMapping("/branches/delete/{id}")
     public String deleteBranch(@PathVariable Integer id){
         service.deleteBranch(id);
         return "redirect:/branches";
