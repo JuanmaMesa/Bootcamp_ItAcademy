@@ -41,11 +41,11 @@ public class BankBranchController {
     }
     @PostMapping("branches/{id}")
     public String updateBranch(@PathVariable Integer id, @ModelAttribute("branch")BankBranch bankBranch, Model model){
-        BankBranch updateBanckBranch = service.findById(id);
-        updateBanckBranch.setPk_bankBranchId(id);
-        updateBanckBranch.setNameBranch(bankBranch.getNameBranch());
-        updateBanckBranch.setCountryBranch(bankBranch.getCountryBranch());
-        service.updateBranch(updateBanckBranch);
+        BankBranch updateBankBranch = service.findById(id);
+        updateBankBranch.setPk_bankBranchId(id);
+        updateBankBranch.setNameBranch(bankBranch.getNameBranch());
+        updateBankBranch.setCountryBranch(bankBranch.getCountryBranch());
+        service.updateBranch(updateBankBranch);
 
         return "redirect:/branches";
     }
