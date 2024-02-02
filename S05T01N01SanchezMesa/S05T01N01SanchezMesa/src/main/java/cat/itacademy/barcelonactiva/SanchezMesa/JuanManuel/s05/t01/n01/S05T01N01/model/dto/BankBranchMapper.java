@@ -12,7 +12,6 @@ public interface BankBranchMapper {
     BankBranchMapper MAPPER = Mappers.getMapper(BankBranchMapper.class);
 
     @Mapping(source = "pk_bankBranchId", target = "id")
-    //@Mapping(source = "branchType", target = "isEuCountry")
     BankBranchDto bankBranchToDto(BankBranch bankBranch);
 
     @Mapping(source = "id", target = "pk_bankBranchId")
@@ -24,5 +23,3 @@ public interface BankBranchMapper {
         dto.setBranchType(dto.getCountryBranch());
     }
 }
-
-//https://www.adictosaltrabajo.com/2020/04/14/como-mapear-objetos-en-java-con-mapstruct/ liches.org

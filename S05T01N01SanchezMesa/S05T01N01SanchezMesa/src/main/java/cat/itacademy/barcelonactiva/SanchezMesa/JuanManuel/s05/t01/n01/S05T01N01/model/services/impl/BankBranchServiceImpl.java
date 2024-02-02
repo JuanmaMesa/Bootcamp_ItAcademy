@@ -23,11 +23,6 @@ public class BankBranchServiceImpl implements BankBranchService {
         return  branches.stream().map(BankBranchMapper.MAPPER::bankBranchToDto)
                 .collect(Collectors.toList());
 
-        //List<BankBranchDto>dtoList = branches.stream()
-          //      .map(BankBranchMapper.mapper::bankBranchToDto)
-            //    .collect(Collectors.toList());
-        //return dtoList;
-
     }
 
     @Override
@@ -42,7 +37,6 @@ public class BankBranchServiceImpl implements BankBranchService {
         BankBranch savedBankBranch = repository.save(bankBranch1);
 
         return BankBranchMapper.MAPPER.bankBranchToDto(savedBankBranch);
-
     }
 
     @Override
@@ -52,7 +46,7 @@ public class BankBranchServiceImpl implements BankBranchService {
         bankBranch2.setNameBranch(dto.getNameBranch());
         bankBranch2.setCountryBranch(dto.getCountryBranch());
         BankBranch updateBankBranch = repository.save(bankBranch2);
-        return BankBranchMapper.MAPPER.bankBranchToDto(bankBranch2);
+        return BankBranchMapper.MAPPER.bankBranchToDto(updateBankBranch);
     }
 
 
