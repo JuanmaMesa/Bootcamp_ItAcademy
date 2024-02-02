@@ -1,21 +1,25 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.dto;
 
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.domain.BankBranch;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BankBranchDto  {
     private Integer id;
     private String nameBranch;
     private String countryBranch;
     private String branchType;
+    private final static ArrayList<String> EURO_CONTRIES = new ArrayList<>(Arrays.asList("Austria","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Cyprus","Czech Republic","Denmark","Estonia","Finland","France","Georgia","Germany","Greece","Hungary","Iceland","Ireland","Italy","Spain"));
 
     public BankBranchDto(){
+        this.branchType = isEuCountry(countryBranch)? "UE": "NOT UE";
 
     }
-    public BankBranchDto(Integer id, String nameBranch, String countryBranch, String branchTipe) {
+    public BankBranchDto(Integer id, String nameBranch, String countryBranch) {
         this.id = id;
         this.nameBranch = nameBranch;
         this.countryBranch = countryBranch;
-        this.branchType = branchTipe;
+        branchType = isEuCountry(countryBranch)? "UE": "NOT UE";
+
     }
 
     public Integer getId() {
@@ -42,17 +46,18 @@ public class BankBranchDto  {
         this.countryBranch = countryBranch;
     }
 
-    public String getBranchTipe() {
+    public String getBranchType() {
+
         return branchType;
     }
 
-    public void setBranchTipe(String branchTipe) {
-        this.branchType = branchTipe;
+    public void setBranchType(String branchTipe) {
+        this.branchType = isEuCountry(countryBranch)? "UE": "NOT UE";
     }
-    public BankBranchDto dto( BankBranchDto bankBranchDto){
 
-
-        return null;
+    private static boolean isEuCountry(String country){
+        return EURO_CONTRIES.contains(country);
     }
+
 
 }

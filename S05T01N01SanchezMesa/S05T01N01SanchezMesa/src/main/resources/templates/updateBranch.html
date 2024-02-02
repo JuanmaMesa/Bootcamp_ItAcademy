@@ -26,7 +26,7 @@
                 <div class="col-lg-6 col-md-6 col-ms-6 container justify-content-center card">
                     <h1 class="text-center"> Update Of Branch</h1>
                     <div class="card-body">
-                        <form th:action="@{/branches/{id}(id=${branch.pk_bankBranchId}) }" th:object="${branch}" method="POST">
+                        <form th:action="@{/branches/{id}(id=${id}) }" th:object="${branch}" method="POST">
                             <div class="form-group">
                                 <label>Name :</label>
                                 <input type="text" name="nameBranch" th:field="*{nameBranch}" class="form-control" placeholder="Your name is ..." required>

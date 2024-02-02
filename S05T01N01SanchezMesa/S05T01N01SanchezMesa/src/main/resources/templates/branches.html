@@ -22,7 +22,7 @@
     <br>
 
   <div class="container">
-      <div clase="row">
+      <div class="row">
           <h1>List of Bank Branches</h1>
       </div>
       <div class="row">
@@ -37,6 +37,7 @@
             <tr>
                 <th> Name </th>
                 <th> Country </th>
+                <th> Branch Type </th>
                 <th> Action </th>
             </tr>
           </thead>
@@ -44,9 +45,10 @@
           <tr th:each=" branch : ${branches}">
               <td th:text="${branch.nameBranch}" > Name </td>
               <td th:text="${branch.countryBranch}"> Country </td>
+              <td th:text="${branch.branchType}"> Branch Type </td>
               <td>
-                  <a th:href="@{/branches/update/{id}(id=${branch.pk_bankBranchId})}" class="btn btn-primary"> Update </a>
-                  <a  th:href="@{/branches/delete/{id}(id=${branch.pk_bankBranchId})}" class="btn btn-danger"> Delete </a>
+                  <a th:href="@{/branches/update/{id}(id=${branch.id})}" class="btn btn-primary"> Update </a>
+                  <a  th:href="@{/branches/delete/{id}(id=${branch.id})}" class="btn btn-danger"> Delete </a>
               </td>
           </tr>
 

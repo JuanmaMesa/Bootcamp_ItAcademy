@@ -1,11 +1,16 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.controller;
 
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.domain.BankBranch;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.dto.BankBranchDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.services.BankBranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 //@RequestMapping("api/v1/branch")
@@ -15,21 +20,22 @@ public class BankBranchController {
 
     @GetMapping("/branches")
     public String listBankBranch(Model model){
-        model.addAttribute("branches", service.getAllBranch());
+        List<BankBranchDto>lista = service.getAllBranch();
+        model.addAttribute("branches",lista);
+        //model.addAttribute("branches", service.getAllBranch());
         return "branches";
 
     }
 
     @GetMapping ("/branches/add")
     public String showFormulary( Model model){
-        BankBranch bankBranch = new BankBranch();
-        model.addAttribute("branch", bankBranch);
+        model.addAttribute("branch",new BankBranchDto());
         return "createNewBranch";
     }
 
     @PostMapping("/branches")
-    public String addBankBranch(@ModelAttribute("branch") BankBranch bankBranch){
-        service.addBankBranch(bankBranch);
+    public String addBankBranch(@ModelAttribute("branch") BankBranchDto bankBranchDto){
+        service.addBankBranch(bankBranchDto);
         return "redirect:/branches";
     }
 
@@ -40,12 +46,9 @@ public class BankBranchController {
 
     }
     @PostMapping("branches/{id}")
-    public String updateBranch(@PathVariable Integer id, @ModelAttribute("branch")BankBranch bankBranch, Model model){
-        BankBranch updateBankBranch = service.findById(id);
-        updateBankBranch.setPk_bankBranchId(id);
-        updateBankBranch.setNameBranch(bankBranch.getNameBranch());
-        updateBankBranch.setCountryBranch(bankBranch.getCountryBranch());
-        service.updateBranch(updateBankBranch);
+    public String updateBranch(@PathVariable Integer id, @ModelAttribute("branch")BankBranchDto bankBranchDto, Model model){
+
+        service.updateBranch(id,bankBranchDto);
 
         return "redirect:/branches";
     }
