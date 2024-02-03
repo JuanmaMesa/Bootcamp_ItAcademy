@@ -8,7 +8,7 @@ import java.util.List;
 public interface BankBranchService {
 
     public List<BankBranchDto> getAllBranch();
-    public BankBranch getOneBranch(Integer Id);
+    public BankBranch getOneBranch(Integer id);
     public BankBranchDto addBankBranch(BankBranchDto bankBranchDto);
     public BankBranchDto updateBranch(Integer id, BankBranchDto dto);
     public void deleteBranch(Integer id);

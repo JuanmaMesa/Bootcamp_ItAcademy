@@ -3,6 +3,7 @@ package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N0
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.domain.BankBranch;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.dto.BankBranchDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.dto.BankBranchMapper;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.exception.BranchNotFoundException;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.repository.BankBranchRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n01.S05T01N01.model.services.BankBranchService;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,8 +28,10 @@ public class BankBranchServiceImpl implements BankBranchService {
     }
 
     @Override
-    public BankBranch getOneBranch(Integer Id) {
-        return null;
+    public BankBranch getOneBranch(Integer id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new BranchNotFoundException("Not found branch with id: "+id));
+
     }
 
     @Override
@@ -42,7 +46,7 @@ public class BankBranchServiceImpl implements BankBranchService {
     @Override
     public BankBranchDto updateBranch(Integer id, BankBranchDto dto) {
         BankBranch bankBranch2 = repository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException("Not found with id "+ id));
+                .orElseThrow(()-> new BranchNotFoundException("Not found with id "+ id));
         bankBranch2.setNameBranch(dto.getNameBranch());
         bankBranch2.setCountryBranch(dto.getCountryBranch());
         BankBranch updateBankBranch = repository.save(bankBranch2);
@@ -64,7 +68,7 @@ public class BankBranchServiceImpl implements BankBranchService {
     @Override
     public BankBranchDto findById(Integer id) {
         BankBranch bankBranch = repository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException("bankBranch not found with id "+ id));
+                .orElseThrow(()-> new BranchNotFoundException("bankBranch not found with id "+ id));
         return BankBranchMapper.MAPPER.bankBranchToDto(bankBranch);
     }
 }
