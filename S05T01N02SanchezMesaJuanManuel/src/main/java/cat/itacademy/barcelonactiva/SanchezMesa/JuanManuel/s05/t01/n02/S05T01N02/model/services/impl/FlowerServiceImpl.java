@@ -7,10 +7,11 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n02.S05T01N02
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.s05.t01.n02.S05T01N02.model.services.FlowerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class FlowerServiceImpl implements FlowerService {
     @Autowired
     private FlowerRepository repository;
@@ -53,7 +54,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public FlowerDto findById(Integer id) {
         FlowerEntity flowerEntity = repository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException("Flower not found with id: "+id);
+                .orElseThrow(()-> new EntityNotFoundException("Flower not found with id: "+id));
         return FlowerMapper.MAPPER.flowerToDto(flowerEntity);
     }
 }

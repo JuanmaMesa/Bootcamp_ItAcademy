@@ -13,6 +13,9 @@ public class FlowerEntity {
     @Column(name = "country", nullable = false, length = 50)
     private String countryFlower;
 
+    public FlowerEntity() {
+    }
+
     public FlowerEntity(Integer pk_FlorID, String nameFlower, String countryFlower) {
         this.pk_FlorID = pk_FlorID;
         this.nameFlower = nameFlower;
