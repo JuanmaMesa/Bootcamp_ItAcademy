@@ -2,9 +2,11 @@ package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "players")
-public class Player {
+public class PlayerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -14,18 +16,18 @@ public class Player {
     @Column(name = "score")
     private int score;
 
-    @Column (name = "date")
-    private int date;
+    @Column (name = "registration_date")
+    private LocalDateTime registrationDate;
 
-    public Player(){
+    public PlayerEntity(){
 
     }
 
-    public Player(Integer id, String name, int score, int date) {
+    public PlayerEntity(Integer id, String name, int score, LocalDateTime registrationDate) {
         this.id = id;
         this.name = name;
         this.score = score;
-        this.date = date;
+        this.registrationDate = registrationDate;
     }
 
     public String getName() {
@@ -44,11 +46,11 @@ public class Player {
         this.score = score;
     }
 
-    public int getDate() {
-        return date;
+    public LocalDateTime getDate() {
+        return registrationDate;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setDate(LocalDateTime date) {
+        this.registrationDate = date;
     }
 }
