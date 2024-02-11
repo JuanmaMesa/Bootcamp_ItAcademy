@@ -15,25 +15,33 @@ public class PlayerEntity {
     private String name;
     @Column(name = "email")
     private String email;
-    @Column(name = "password",length = 15, nullable = false)
+    @Column(name = "password", length = 15, nullable = false)
     private String password;
 
     @Column(name = "score")
     private int score;
 
-    @Column (name = "registration_date")
+    @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 
 
-
-    public PlayerEntity(){
+    public PlayerEntity() {
 
     }
 
-    public PlayerEntity(Integer id, String name, int score, LocalDateTime registrationDate) {
-        this.id = id;
-        this.name = name;
-        this.score = score;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
 
@@ -61,11 +69,12 @@ public class PlayerEntity {
         this.score = score;
     }
 
-    public LocalDateTime getDate() {
-        return registrationDate;
+    // establecer la fecha automaticamente
+    @PrePersist
+    protected void onCreate() {
+        registrationDate = LocalDateTime.now();
     }
 
-    public void setDate(LocalDateTime date) {
-        this.registrationDate = date;
-    }
 }
+
+
