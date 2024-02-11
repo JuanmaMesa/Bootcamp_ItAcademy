@@ -47,7 +47,9 @@ public class FlowerServiceImpl implements FlowerService {
 
     @Override
     public void deleteFlower(Integer id) {
-        repository.deleteById(id);
+        FlowerEntity flowerTodelete = repository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Not found with id: " + id));
+        repository.deleteById(flowerTodelete.getPk_FlorID());
 
     }
 

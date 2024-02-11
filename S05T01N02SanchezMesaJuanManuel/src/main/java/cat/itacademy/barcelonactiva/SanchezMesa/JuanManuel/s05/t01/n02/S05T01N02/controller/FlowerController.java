@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 //@RequestMapping("/api/v1")
 public class FlowerController {
-
     @Autowired
     private FlowerService service;
 
@@ -37,6 +36,27 @@ public class FlowerController {
     public ResponseEntity<FlowerDto> addFlower(@RequestBody FlowerDto flowerDto){
         FlowerDto newFlowerDto = service.addFlower(flowerDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(newFlowerDto);
+    }
+
+    @Operation(
+            summary = "update a Flower by id",
+            description = "update a Flower object. The response is a httpStatus showing the result of the operation.",
+            tags = {"put"})
+    @PutMapping("/update/{id}")
+    public ResponseEntity<FlowerDto> uppdateFlower(@PathVariable int id,@RequestBody FlowerDto flowerDto){
+
+        FlowerDto newFlowerDto = service.updateFlower(id,flowerDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newFlowerDto);
+    }
+
+    @Operation(
+            summary = "Delete a Flower by id",
+            description = "Delete a Flower object. The response is a httpStatus showing the result of the operation.",
+            tags = {"delete"})
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteFlower(@PathVariable int id){
+       service.deleteFlower(id);
+       return new ResponseEntity<>(("Flower deleted successfully with id: "+id), HttpStatus.OK);
     }
 
 }
