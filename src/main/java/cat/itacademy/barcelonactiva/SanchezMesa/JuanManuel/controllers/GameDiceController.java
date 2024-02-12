@@ -16,8 +16,6 @@ public class GameDiceController {
     @Autowired
     private PlayerService service;
 
-
-
     @GetMapping("home")
     public String ShowFirstPage(){
         return "index";
