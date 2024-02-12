@@ -45,6 +45,9 @@ public class BankBranchServiceImpl implements BankBranchService {
 
     @Override
     public BankBranchDto updateBranch(Integer id, BankBranchDto dto) {
+        if( id == null){
+            throw new IllegalArgumentException(" Branch Bank Id cannot be null");
+        }
         BankBranch bankBranch2 = repository.findById(id)
                 .orElseThrow(()-> new BranchNotFoundException("Not found with id "+ id));
         bankBranch2.setNameBranch(dto.getNameBranch());
