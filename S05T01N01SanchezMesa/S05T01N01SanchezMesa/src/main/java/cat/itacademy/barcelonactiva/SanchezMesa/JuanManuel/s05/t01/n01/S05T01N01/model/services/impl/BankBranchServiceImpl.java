@@ -59,7 +59,9 @@ public class BankBranchServiceImpl implements BankBranchService {
 
     @Override
     public void deleteBranch(Integer id) {
-        repository.deleteById(id);
+        BankBranch bankBranchToDeleted = repository.findById(id)
+                        .orElseThrow(()->new BranchNotFoundException("Branch Not found with Id: "+id));
+        repository.deleteById(bankBranchToDeleted.getPk_bankBranchId());
 
     }
 
