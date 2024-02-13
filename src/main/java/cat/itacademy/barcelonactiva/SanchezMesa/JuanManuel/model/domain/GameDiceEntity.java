@@ -1,5 +1,6 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain;
 
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,14 @@ public class GameDiceEntity {
     @Transient
     private final byte winValue = 7;
 
+    public GameDiceEntity(PlayerEntity player, byte dice1, byte dice2){
+        this.player = player;
+        this.dice1 = dice1;
+        this.dice2 = dice2;
 
+
+
+    }
 
     //TODO  hacer timestamp ( a que hora se jugo la partida)
 
