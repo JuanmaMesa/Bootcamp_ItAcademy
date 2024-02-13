@@ -13,8 +13,6 @@ public class PlayerEntity {
     private Integer id;
     @Column(name = "name", length = 50)
     private String name;
-    @Column(name = "email")
-    private String email;
     @Column(name = "password", length = 15, nullable = false)
     private String password;
 

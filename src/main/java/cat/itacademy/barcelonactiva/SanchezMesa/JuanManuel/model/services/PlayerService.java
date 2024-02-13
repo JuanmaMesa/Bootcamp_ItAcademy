@@ -12,4 +12,5 @@ public interface PlayerService extends UserDetailsService {
     public PlayerDto addPlayer(PlayerDto dto);
     public void deletePlayer(Integer id);
     public PlayerDto findById(Integer id);
+    public PlayerDto findByName(String name);
 }
