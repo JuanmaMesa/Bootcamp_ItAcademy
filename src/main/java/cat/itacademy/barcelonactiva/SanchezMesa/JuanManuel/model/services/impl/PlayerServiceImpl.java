@@ -55,7 +55,7 @@ public class PlayerServiceImpl implements PlayerService {
     public void deletePlayer(Integer id) {
         PlayerEntity existingPlayer = repository.findById(id).
                 orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+id));
-        repository.deleteById(existingPlayer.getId());
+        repository.deleteById(existingPlayer.getPlayerId());
     }
 
     @Override
