@@ -38,8 +38,9 @@ public class PlayerServiceImpl implements PlayerService {
                 .orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID:"+ id));
         playerEntity.setName(dto.getName());
         playerEntity.setPassword(dto.getPassword());
+        PlayerEntity updatePlayer = repository.save(playerEntity);
 
-        return null;
+        return PlayerMapper.MAPPER.playerToDto(updatePlayer);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class PlayerServiceImpl implements PlayerService {
     public void deletePlayer(Integer id) {
         PlayerEntity existingPlayer = repository.findById(id).
                 orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+id));
-    //Todo eliminar
+        repository.deleteById(existingPlayer.getId());
     }
 
     @Override

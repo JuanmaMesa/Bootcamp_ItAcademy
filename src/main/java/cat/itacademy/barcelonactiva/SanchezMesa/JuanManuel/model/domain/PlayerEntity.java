@@ -27,14 +27,6 @@ public class PlayerEntity {
 
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
@@ -65,6 +57,14 @@ public class PlayerEntity {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     // establecer la fecha automaticamente
