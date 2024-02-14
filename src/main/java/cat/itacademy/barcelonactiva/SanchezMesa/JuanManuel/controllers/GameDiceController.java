@@ -1,40 +1,55 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.controllers;
 
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEntity;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.lang.annotation.Repeatable;
+import java.util.List;
 
 @Controller
 public class GameDiceController {
     @Autowired
     private PlayerService service;
 
-    @GetMapping("home")
-    public String ShowFirstPage(){
-        return "index";
+    @PostMapping("")
+    public ResponseEntity<String>newPlayer(@RequestBody PlayerDto playerDto){
+        service.addPlayer(playerDto);
+        return new ResponseEntity<>("Player added succesfully", HttpStatus.CREATED);
     }
 
-    @GetMapping("/add")
+
+    @GetMapping("")
     public String showFormulary(Model model){
         model.addAttribute("player", new PlayerDto());
         return "createPlayerForm";
     }
 
-    @PostMapping("/player")
-    public String addPlayer(@ModelAttribute("player") PlayerDto playerDto, BindingResult result){
-        if(result.hasErrors()){
-            //Todo manejar error
-            return "createPlayerForm";
-        }
-        service.addPlayer(playerDto);
-        return "redirect:/home?success";
+    @GetMapping("")
+    public ResponseEntity<List<PlayerDto>> getAllPlayers(){
+        List<PlayerDto>playerDtoList = service.getAllPlayers();
+        return new ResponseEntity<>(playerDtoList, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String>updatePlayer(@PathVariable("id") Integer id, @RequestBody PlayerDto playerDto){
+        service.updatePlayer(id, playerDto);
+        return new ResponseEntity<>("Player update succesfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/games")
+    public ResponseEntity<GameDiceDto> play(@PathVariable("id") Integer id){
+        //GameDiceDto newGame = service.
+        //return new ResponseEntity<>(newGame, HttpStatus.OK);
+        return null;
     }
 
 

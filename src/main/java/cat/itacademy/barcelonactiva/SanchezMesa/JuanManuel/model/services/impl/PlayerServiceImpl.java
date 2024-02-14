@@ -1,6 +1,7 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.impl;
 
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEntity;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerMapper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerNotFoundException;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class PlayerServiceImpl implements PlayerService {
      @Autowired
      private PlayerRepository repository;
+     //private G
 
     @Override
     public List<PlayerDto> getAllPlayers() {
@@ -69,6 +71,13 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public PlayerDto findByName(String name) {
         // Todo busqueda por nombre
+        return null;
+    }
+
+    @Override
+    public GameDiceDto playGame(Integer idPlayer) {
+        PlayerEntity playerEntity = getOnePlayer(idPlayer);
+        //GameDiceDto gameDiceDto =
         return null;
     }
 
