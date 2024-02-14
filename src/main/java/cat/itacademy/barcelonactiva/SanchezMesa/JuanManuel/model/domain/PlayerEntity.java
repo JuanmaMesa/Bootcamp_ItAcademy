@@ -17,7 +17,7 @@ public class PlayerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer PlayerId;
+    private Integer playerID;
 
     @Column(name = "name", length = 50)
     private String name;
@@ -31,13 +31,11 @@ public class PlayerEntity {
     @OneToMany(mappedBy = "player", fetch = FetchType.LAZY, orphanRemoval = true )
     private List<GameDiceEntity> games;
 
-
-
-    // establecer la fecha automaticamente
-    //@PrePersist
-    /*protected void onCreate() {
+    @PrePersist
+    protected void onCreate() {
         registrationDate = LocalDateTime.now();
-    }*/
+    }
+
 
 }
 

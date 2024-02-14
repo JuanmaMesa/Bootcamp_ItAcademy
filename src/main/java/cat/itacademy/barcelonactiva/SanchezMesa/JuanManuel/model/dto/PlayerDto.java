@@ -5,12 +5,11 @@ import lombok.*;
 import java.time.LocalDateTime;
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlayerDto {
 
-    private Integer PlayerID;
+    private Integer playerID;
     private String name;
     private String password;
     private LocalDateTime registrationDate;

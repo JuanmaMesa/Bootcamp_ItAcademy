@@ -8,8 +8,6 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.Play
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.PlayerRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,16 +46,15 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public PlayerDto addPlayer(PlayerDto dto) {
         PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
-       //todo no coincidir nombre
-       PlayerEntity savePlayer = repository.save(playerEntity);
-        return PlayerMapper.MAPPER.playerToDto(savePlayer);
+       playerEntity  = repository.save(playerEntity);
+        return PlayerMapper.MAPPER.playerToDto(playerEntity);
     }
 
     @Override
     public void deletePlayer(Integer id) {
         PlayerEntity existingPlayer = repository.findById(id).
                 orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+id));
-        repository.deleteById(existingPlayer.getPlayerId());
+        repository.deleteById(existingPlayer.getPlayerID());
     }
 
     @Override
@@ -81,8 +78,5 @@ public class PlayerServiceImpl implements PlayerService {
         return null;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
+
 }

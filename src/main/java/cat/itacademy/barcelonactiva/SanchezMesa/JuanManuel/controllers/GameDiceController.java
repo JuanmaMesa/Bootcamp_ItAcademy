@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.annotation.Repeatable;
 import java.util.List;
-@RequestMapping("/api/v1/players")
-@Controller
+//@RequestMapping("/api/v1/players")
+@RestController
 public class GameDiceController {
     @Autowired
     private PlayerService service;
 
     @PostMapping("")
-    public ResponseEntity<String>newPlayer(@RequestBody PlayerDto playerDto){
-        service.addPlayer(playerDto);
-        return new ResponseEntity<>("Player added succesfully", HttpStatus.CREATED);
+    public ResponseEntity<PlayerDto>newPlayer(@RequestBody PlayerDto playerDto){
+         PlayerDto playerDto1 = service.addPlayer(playerDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(playerDto1);
     }
 
     @GetMapping("")
@@ -59,7 +59,8 @@ public class GameDiceController {
     }
 
     @GetMapping("/ranking/winner")
-    public ResponseEntity<playerDto> getRanking(){
+    public ResponseEntity<PlayerDto> getRankingwinner(){
+        return null;
         
     }
 

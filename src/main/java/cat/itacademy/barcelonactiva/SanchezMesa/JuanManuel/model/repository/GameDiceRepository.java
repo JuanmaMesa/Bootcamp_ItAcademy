@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface GameDiceRepository  extends JpaRepository<GameDiceEntity, Integer> {
-    @Override
-    List<GameDiceEntity> findAll();
-    List<GameDiceEntity> findByPlayerEntity(PlayerEntity playerEntity);
+    List<GameDiceEntity> findByPlayer(PlayerEntity player);
 }
