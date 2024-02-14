@@ -9,13 +9,11 @@ import org.mapstruct.factory.Mappers;
 public interface PlayerMapper {
     PlayerMapper MAPPER = Mappers.getMapper(PlayerMapper.class);
 
-    @Mapping(target = "password", source = "password")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "registrationDate", target = "registrationDate")
+   // @Mapping(target = "password", source = "password")
+    //@Mapping(source = "registrationDate", target = "registrationDate")
     PlayerDto playerToDto(PlayerEntity playerEntity);
 
-    @Mapping(target = "password", source = "password")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "registrationDate", target = "registrationDate")
+    //@Mapping(target = "password", source = "password")
+    //@Mapping(source = "registrationDate", target = "registrationDate")
     PlayerEntity dtoToPlayerEntity(PlayerDto dto);
 }

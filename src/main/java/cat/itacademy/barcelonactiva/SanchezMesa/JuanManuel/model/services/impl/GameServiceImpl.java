@@ -14,9 +14,11 @@ public class GameServiceImpl implements GameServices {
     GameDiceRepository repository;
 
     public GameDiceDto addGame(PlayerEntity playerEntity){
+        repository.save(game)
         GameDiceDto gameDiceDto = newGame();
+        repository.save(playerEntity,);
         repository.save(); //gameDTOToEntity(playerEntity, gameDTO));
-        return gameDTO;
+        return null;
     }
     private GameDiceDto newGame(){
         return new GameDiceDto((byte) RandomDice.newRandomDice(),(byte)RandomDice.newRandomDice());
