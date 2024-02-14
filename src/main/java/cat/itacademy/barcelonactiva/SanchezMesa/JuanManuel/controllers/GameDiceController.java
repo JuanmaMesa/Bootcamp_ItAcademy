@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.lang.annotation.Repeatable;
 import java.util.List;
-
+@RequestMapping("/api/v1/players")
 @Controller
 public class GameDiceController {
     @Autowired
@@ -24,13 +24,6 @@ public class GameDiceController {
     public ResponseEntity<String>newPlayer(@RequestBody PlayerDto playerDto){
         service.addPlayer(playerDto);
         return new ResponseEntity<>("Player added succesfully", HttpStatus.CREATED);
-    }
-
-
-    @GetMapping("")
-    public String showFormulary(Model model){
-        model.addAttribute("player", new PlayerDto());
-        return "createPlayerForm";
     }
 
     @GetMapping("")
@@ -49,6 +42,25 @@ public class GameDiceController {
     public ResponseEntity<GameDiceDto> play(@PathVariable("id") Integer id){
         GameDiceDto newGame = service.playGame(id);
         return new ResponseEntity<>(newGame, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}/games")
+    public ResponseEntity<PlayerDto> deletePlayer(@PathVariable("id") Integer id){
+        return null;
+    }
+    @GetMapping("/ranking")
+    public ResponseEntity<PlayerDto> getRanking(){
+        return null;
+    }
+
+    @GetMapping("/ranking/loser")
+    public ResponseEntity<PlayerDto> getRankingLoser(){
+        return null;
+    }
+
+    @GetMapping("/ranking/winner")
+    public ResponseEntity<playerDto> getRanking(){
+        
     }
 
 
