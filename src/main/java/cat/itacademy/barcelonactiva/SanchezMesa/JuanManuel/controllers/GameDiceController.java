@@ -47,9 +47,8 @@ public class GameDiceController {
 
     @PostMapping("/{id}/games")
     public ResponseEntity<GameDiceDto> play(@PathVariable("id") Integer id){
-        //GameDiceDto newGame = service.
-        //return new ResponseEntity<>(newGame, HttpStatus.OK);
-        return null;
+        GameDiceDto newGame = service.playGame(id);
+        return new ResponseEntity<>(newGame, HttpStatus.OK);
     }
 
 

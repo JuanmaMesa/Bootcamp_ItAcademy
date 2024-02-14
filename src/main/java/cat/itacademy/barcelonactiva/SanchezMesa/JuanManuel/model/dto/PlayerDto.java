@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PlayerDto {
 
-    private Integer id;
+    private Integer PlayerID;
     private String name;
     private String password;
     private LocalDateTime registrationDate;

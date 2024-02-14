@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 
 public class GameDiceDto {
-    private String name;
+    private int id;
     private byte dice1;
     private byte dice2;
     private boolean win;
