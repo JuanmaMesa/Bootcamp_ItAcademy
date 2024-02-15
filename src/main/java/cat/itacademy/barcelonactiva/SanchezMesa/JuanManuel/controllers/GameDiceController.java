@@ -20,24 +20,21 @@ public class GameDiceController {
     @Autowired
     private PlayerService service;
 
-    @PostMapping("")
+    @PostMapping("createPlayer")
     public ResponseEntity<PlayerDto>newPlayer(@RequestBody PlayerDto playerDto){
          PlayerDto playerDto1 = service.addPlayer(playerDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(playerDto1);
     }
-
-    @GetMapping("")
+    @GetMapping("/findAllPlayers")
     public ResponseEntity<List<PlayerDto>> getAllPlayers(){
         List<PlayerDto>playerDtoList = service.getAllPlayers();
         return new ResponseEntity<>(playerDtoList, HttpStatus.OK);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<String>updatePlayer(@PathVariable("id") Integer id, @RequestBody PlayerDto playerDto){
         service.updatePlayer(id, playerDto);
         return new ResponseEntity<>("Player update succesfully", HttpStatus.OK);
     }
-
     @PostMapping("/{id}/games")
     public ResponseEntity<GameDiceDto> play(@PathVariable("id") Integer id){
         GameDiceDto newGame = service.playGame(id);
@@ -46,6 +43,7 @@ public class GameDiceController {
 
     @DeleteMapping("/{id}/games")
     public ResponseEntity<PlayerDto> deletePlayer(@PathVariable("id") Integer id){
+
         return null;
     }
     @GetMapping("/ranking")

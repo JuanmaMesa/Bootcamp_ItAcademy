@@ -11,11 +11,11 @@ public interface PlayerMapper {
 
     //@Mapping(target = "playerId", source = "playerId")
    // @Mapping(source = "registrationDate", target = "registrationDate")
-    @Mapping(target = "password", source = "password")
+    //@Mapping(target = "password", source = "password")
     PlayerDto playerToDto(PlayerEntity playerEntity);
 
     //@Mapping(target = "playerId", source = "playerId")
-    //@Mapping(source = "registrationDate", target = "registrationDate")
-    @Mapping(target = "password", source = "password")
+   // @Mapping(source = "registrationDate", target = "registrationDate")
+    //@Mapping(target = "password", source = "password")
     PlayerEntity dtoToPlayerEntity(PlayerDto dto);
 }
