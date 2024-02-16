@@ -28,7 +28,7 @@ public class PlayerEntity {
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 
-    @OneToMany(mappedBy = "player", fetch = FetchType.LAZY, orphanRemoval = true )
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<GameDiceEntity> games;
 
     @PrePersist

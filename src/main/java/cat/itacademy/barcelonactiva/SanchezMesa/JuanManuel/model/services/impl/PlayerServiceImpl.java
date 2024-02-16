@@ -1,11 +1,16 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.impl;
 
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.GameDiceEntity;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEntity;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceMApper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerMapper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerNotFoundException;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.mechanics.RandomDice;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.GameDiceRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.PlayerRepository;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.GameService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +22,11 @@ import java.util.stream.Collectors;
 public class PlayerServiceImpl implements PlayerService {
      @Autowired
      private PlayerRepository repository;
-     //private G
+     @Autowired
+     private GameDiceRepository gameDiceRepository;
+
+     @Autowired
+     private GameService gameService;
 
     @Override
     public List<PlayerDto> getAllPlayers() {
@@ -25,13 +34,17 @@ public class PlayerServiceImpl implements PlayerService {
         return players.stream().map(PlayerMapper.MAPPER::playerToDto)
                 .collect(Collectors.toList());
     }
-
     @Override
     public PlayerEntity getOnePlayer(Integer id) {
         return repository.findById(id)
                 .orElseThrow(()-> new PlayerNotFoundException("Not found player with id: " +id));
     }
-
+    @Override
+    public PlayerDto createPlayer(PlayerDto dto) {
+        PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
+        playerEntity  = repository.save(playerEntity);
+        return PlayerMapper.MAPPER.playerToDto(playerEntity);
+    }
     @Override
     public PlayerDto updatePlayer(Integer id, PlayerDto dto) {
         PlayerEntity playerEntity =  repository.findById(id)
@@ -44,18 +57,26 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public PlayerDto addPlayer(PlayerDto dto) {
-        PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
-       playerEntity  = repository.save(playerEntity);
-        return PlayerMapper.MAPPER.playerToDto(playerEntity);
+    public List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer) {
+        PlayerEntity playerEntity = getOnePlayer(idPlayer);
+        return playerEntity.getGames();
     }
 
     @Override
-    public void deletePlayer(Integer id) {
-        PlayerEntity existingPlayer = repository.findById(id).
-                orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+id));
-        repository.deleteById(existingPlayer.getPlayerID());
+    public GameDiceDto playGame(Integer idPlayer) {
+        PlayerEntity player = getOnePlayer(idPlayer);
+
+        return gameService.createGame(player);
     }
+
+    @Override
+    public void deleteAllGamesPlayer(Integer idPlayer) {
+            PlayerEntity existingPlayer = repository.findById(idPlayer).
+                    orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+idPlayer));
+            repository.deleteById(existingPlayer.getPlayerID());
+
+    }
+
 
     @Override
     public PlayerDto findById(Integer id) {
@@ -65,17 +86,25 @@ public class PlayerServiceImpl implements PlayerService {
         return PlayerMapper.MAPPER.playerToDto(playerEntity);
     }
 
+
     @Override
-    public PlayerDto findByName(String name) {
-        // Todo busqueda por nombre
+    public PlayerDto getWiner() {
         return null;
     }
 
     @Override
-    public GameDiceDto playGame(Integer idPlayer) {
-        PlayerEntity playerEntity = getOnePlayer(idPlayer);
-        //GameDiceDto gameDiceDto =
+    public PlayerDto getLoser() {
         return null;
+    }
+
+    @Override
+    public List<PlayerDto> getAllSuccessRate() {
+        return null;
+    }
+
+    @Override
+    public double getAverageSuccessRate() {
+        return 0;
     }
 
 

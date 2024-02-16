@@ -1,6 +1,5 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain;
 
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +40,6 @@ public class GameDiceEntity {
 
     }
 
-    //TODO  hacer timestamp ( a que hora se jugo la partida)
 
 
 
