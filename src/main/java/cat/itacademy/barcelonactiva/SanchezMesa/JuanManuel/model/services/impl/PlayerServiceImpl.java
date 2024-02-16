@@ -103,8 +103,13 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public double getAverageSuccessRate() {
-        return 0;
+    public double getAverageSuccessRate(Integer idPlayer) {
+        List<GameDiceEntity> allGames = getAllGamesPlayer(idPlayer);
+        long totalGames = allGames.size();
+        long gamesWin = allGames.stream()
+                .filter(GameDiceEntity::isWin)
+                .count();
+        return totalGames > 0 ? ((double) gamesWin / totalGames) *100:0;
     }
 
 

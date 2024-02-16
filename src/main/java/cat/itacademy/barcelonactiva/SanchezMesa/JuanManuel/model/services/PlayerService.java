@@ -26,5 +26,5 @@ public interface PlayerService  {
     public  PlayerDto getWiner();
     public PlayerDto getLoser();
     List<PlayerDto> getAllSuccessRate();
-    double getAverageSuccessRate();
+    double getAverageSuccessRate(Integer idPlayer);
 }
