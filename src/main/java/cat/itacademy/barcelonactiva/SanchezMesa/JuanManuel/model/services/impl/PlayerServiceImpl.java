@@ -12,18 +12,18 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.Play
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.GameService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class PlayerServiceImpl implements PlayerService {
+public class PlayerServiceImpl implements PlayerService, UserDetailsService {
      @Autowired
-     private PlayerRepository repository;
+     private PlayerRepository playerRepository;
      @Autowired
      private GameDiceRepository gameDiceRepository;
      @Autowired
@@ -31,19 +31,19 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public PlayerDto createPlayer(PlayerDto dto) {
-        Optional<PlayerEntity> existintPlayer = repository.findByNameIgnoreCase(dto.getName());
+        Optional<PlayerEntity> existintPlayer = playerRepository.findByNameIgnoreCase(dto.getName());
 
         if(existintPlayer.isPresent()){
             throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
         }
         PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
-        playerEntity  = repository.save(playerEntity);
+        playerEntity  = playerRepository.save(playerEntity);
         return PlayerMapper.MAPPER.playerToDto(playerEntity);
     }
 
     @Override
     public List<PlayerDto> getAllPlayers() {
-        List<PlayerEntity> players = repository.findAll();
+        List<PlayerEntity> players = playerRepository.findAll();
 
         return players.stream().map(player->{
            PlayerDto playerDto = PlayerMapper.MAPPER.playerToDto(player);
@@ -71,33 +71,36 @@ public class PlayerServiceImpl implements PlayerService {
         return winRate;
 
     }
+
+
+
     @Override
     public PlayerEntity getOnePlayer(Integer id) {
-        return repository.findById(id)
+        return playerRepository.findById(id)
                 .orElseThrow(()-> new PlayerNotFoundException("Not found player with id: " +id));
     }
     @Override
     public PlayerDto updatePlayer(Integer id, PlayerDto dto) {
-        PlayerEntity playerEntity =  repository.findById(id)
+        PlayerEntity playerEntity =  playerRepository.findById(id)
                 .orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID:"+ id));
 
         if(!playerEntity.getName().equalsIgnoreCase(dto.getName())){ // conflictos con su propio nombre
-            Optional<PlayerEntity> existingPlayer = repository.findByNameIgnoreCase(dto.getName());
+            Optional<PlayerEntity> existingPlayer = playerRepository.findByNameIgnoreCase(dto.getName());
                 if(existingPlayer.isPresent()){
                     throw new PlayerAlreadyExistException("Oops, the player name is already taken.");
                 }
         }
         playerEntity.setName(dto.getName());
         playerEntity.setPassword(dto.getPassword());
-        PlayerEntity updatePlayer = repository.save(playerEntity);
+        PlayerEntity updatePlayer = playerRepository.save(playerEntity);
 
         return PlayerMapper.MAPPER.playerToDto(updatePlayer);
     }
     @Override
     public void deletePlayer(Integer idPlayer) {
-        PlayerEntity existingPlayer = repository.findById(idPlayer).
+        PlayerEntity existingPlayer = playerRepository.findById(idPlayer).
                 orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+idPlayer));
-        repository.deleteById(existingPlayer.getPlayerID());
+        playerRepository.deleteById(existingPlayer.getPlayerID());
     }
     @Override
     public List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer) {
@@ -114,14 +117,14 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void deleteAllGamesPlayer(Integer idPlayer) {
-            PlayerEntity existingPlayer = repository.findById(idPlayer).
+            PlayerEntity existingPlayer = playerRepository.findById(idPlayer).
                     orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+idPlayer));
 
             gameService.deleteAllGames(existingPlayer);
 
     }
     public int numberGamesPlayed (Integer playerId){
-        PlayerEntity player = repository.findById(playerId)
+        PlayerEntity player = playerRepository.findById(playerId)
                 .orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+playerId));
         return player.getGames().size();
     }
@@ -168,5 +171,20 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
 
+    @Override
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            PlayerEntity player = playerRepository.findByNameIgnoreCase(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("Player not found with username: " + username));
+            return new org.springframework.security.core.userdetails.User(player.getName(), player.getPassword(), Collections.emptyList());
+        };
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        PlayerEntity player = playerRepository.findByNameIgnoreCase(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Player not found with username: " + username));
+        return new org.springframework.security.core.userdetails.User(player.getName(), player.getPassword(), new ArrayList<>());
+    }
 }
+

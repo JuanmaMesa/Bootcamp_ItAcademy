@@ -4,6 +4,7 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.GameDice
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEntity;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 public interface PlayerService  {
@@ -22,4 +23,7 @@ public interface PlayerService  {
     void deleteAllGamesPlayer(Integer idPlayer);
     List<PlayerDto> getAllSuccessRate();
     double getAverageSuccessRate(Integer idPlayer);
+
+    UserDetailsService userDetailsService();
+
 }
