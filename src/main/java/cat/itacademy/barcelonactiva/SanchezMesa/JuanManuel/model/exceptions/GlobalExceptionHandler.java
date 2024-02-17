@@ -20,14 +20,18 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
                 request.getDescription(false));
             return new ResponseEntity<ErrorMessage>(message,HttpStatus.NOT_FOUND);
     }
-    public ResponseEntity<ErrorMessage> playerAlreadyExistException(PlayerAlredyExistException ex, WebRequest request){
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.CONFLICT.value(),
-                new Date(),
-                ex.getMessage(),
-                request.getDescription(false));
-        return  new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
-    }
+
+
+        @ExceptionHandler(PlayerAlreadyExistException.class)
+        public ResponseEntity<ErrorMessage>playerExistException(PlayerAlreadyExistException ex, WebRequest request) {
+            ErrorMessage message = new ErrorMessage(
+                    HttpStatus.CONFLICT.value(),
+                    new Date(),
+                    ex.getMessage(),
+                    request.getDescription(false));
+            return new ResponseEntity<ErrorMessage>(message, HttpStatus.CONFLICT);
+
+        }
 
 
 }

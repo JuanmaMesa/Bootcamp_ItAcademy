@@ -3,23 +3,21 @@ package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.impl;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.GameDiceEntity;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEntity;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceMApper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerMapper;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerAlreadyExistException;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerNotFoundException;
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.mechanics.RandomDice;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.GameDiceRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.PlayerRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.GameService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,10 +31,16 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public PlayerDto createPlayer(PlayerDto dto) {
+        Optional<PlayerEntity> existintPlayer = repository.findByNameIgnoreCase(dto.getName());
+
+        if(existintPlayer.isPresent()){
+            throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
+        }
         PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
         playerEntity  = repository.save(playerEntity);
         return PlayerMapper.MAPPER.playerToDto(playerEntity);
     }
+
     @Override
     public List<PlayerDto> getAllPlayers() {
         List<PlayerEntity> players = repository.findAll();
@@ -87,10 +91,7 @@ public class PlayerServiceImpl implements PlayerService {
         PlayerEntity existingPlayer = repository.findById(idPlayer).
                 orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+idPlayer));
         repository.deleteById(existingPlayer.getPlayerID());
-
     }
-
-
     @Override
     public List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer) {
         PlayerEntity playerEntity = getOnePlayer(idPlayer);
