@@ -66,56 +66,24 @@ public class GameDiceController {
 
     @GetMapping("/ranking")
     public ResponseEntity<List<PlayerDto>> getRanking(){
-            List<PlayerDto>playerDtoList = playerService.getAllPlayers();
-            playerDtoList.forEach( player ->{
-                double averageSuccessRate = playerService.getAverageSuccessRate(player.getPlayerID());
-                player.setAverageSuccessRate(averageSuccessRate);
-            });
+          List<PlayerDto> PlayersRanking = playerService.getAllSuccessRate();
 
-
-            List<PlayerDto> sortedPlayerDtoList = playerDtoList.stream()
-                    .sorted(Comparator.comparing(PlayerDto::getAverageSuccessRate).reversed())
-                    .collect(Collectors.toList());
-
-            return new ResponseEntity<>(sortedPlayerDtoList, HttpStatus.OK);
+            return new ResponseEntity<>(PlayersRanking, HttpStatus.OK);
     }
 
     @GetMapping("/ranking/loser")
     public ResponseEntity<List<PlayerDto>> getRankingLoser(){
-        List<PlayerDto>playerDtoList = playerService.getAllPlayers();
-        playerDtoList.forEach( player ->{
-            double averageSuccessRate = playerService.getAverageSuccessRate(player.getPlayerID());
-            player.setAverageSuccessRate(averageSuccessRate);
-        });
+        List<PlayerDto>playerDtolosersList = playerService.getLoser();
 
-        double minSuccessRate = playerDtoList.stream()
-                .min(Comparator.comparing(PlayerDto::getAverageSuccessRate))
-                .map(PlayerDto:: getAverageSuccessRate)
-                .orElseThrow();
-
-
-        List<PlayerDto> playersLossers = playerDtoList.stream()
-                .filter(player-> player.getAverageSuccessRate() == minSuccessRate)
-                .toList();
-
-
-        return new ResponseEntity<>(playersLossers, HttpStatus.OK);
+        return new ResponseEntity<>(playerDtolosersList, HttpStatus.OK);
 
     }
 
     @GetMapping("/ranking/winner")
-    public ResponseEntity<PlayerDto> getRankingwinner(){
-        List<PlayerDto>playerDtoList = playerService.getAllPlayers();
-        playerDtoList.forEach( player ->{
-            double averageSuccessRate = playerService.getAverageSuccessRate(player.getPlayerID());
-            player.setAverageSuccessRate(averageSuccessRate);
-        });
+    public ResponseEntity<List<PlayerDto>>  getRankingwinner(){
+        List<PlayerDto>playerDtoWinner = playerService.getWiner();
 
-        PlayerDto playerWiner = playerDtoList.stream()
-                .max(Comparator.comparing(PlayerDto::getAverageSuccessRate))
-                .orElseThrow(NoSuchElementException::new);
-
-        return new ResponseEntity<>(playerWiner, HttpStatus.OK);
+        return new ResponseEntity<>(playerDtoWinner, HttpStatus.OK);
         
     }
 

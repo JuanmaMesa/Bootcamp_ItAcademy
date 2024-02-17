@@ -13,9 +13,13 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.Play
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.GameService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,18 +92,44 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public PlayerDto getWiner() {
-        return null;
+    public List<PlayerDto>  getWiner() {
+
+        double maxSuccessAverage = getAllSuccessRate().stream()
+                .max(Comparator.comparing(PlayerDto::getAverageSuccessRate))
+                .map(PlayerDto::getAverageSuccessRate)
+                .orElseThrow(NoSuchElementException::new);
+
+
+
+        return getAllPlayers().stream()
+                .filter(player -> player.getAverageSuccessRate() == maxSuccessAverage)
+                .toList();
     }
 
     @Override
-    public PlayerDto getLoser() {
-        return null;
+    public List<PlayerDto>  getLoser() {
+
+        double minSuccessAverage = getAllSuccessRate().stream()
+                .min(Comparator.comparing(PlayerDto::getAverageSuccessRate))
+                .map(PlayerDto::getAverageSuccessRate)
+                .orElseThrow(NoSuchElementException::new);
+
+        return getAllPlayers().stream()
+                .filter(player -> player.getAverageSuccessRate() == minSuccessAverage)
+                .toList();
     }
 
     @Override
     public List<PlayerDto> getAllSuccessRate() {
-        return null;
+        List<PlayerDto> playersDtoList = getAllPlayers();
+        playersDtoList.forEach( player ->{
+            double averageSuccessRate = getAverageSuccessRate(player.getPlayerID());
+            player.setAverageSuccessRate(averageSuccessRate);
+                });
+
+        return playersDtoList.stream()
+                .sorted(Comparator.comparing(PlayerDto::getAverageSuccessRate).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -109,6 +139,7 @@ public class PlayerServiceImpl implements PlayerService {
         long gamesWin = allGames.stream()
                 .filter(GameDiceEntity::isWin)
                 .count();
+
         return totalGames > 0 ? ((double) gamesWin / totalGames) *100:0;
     }
 

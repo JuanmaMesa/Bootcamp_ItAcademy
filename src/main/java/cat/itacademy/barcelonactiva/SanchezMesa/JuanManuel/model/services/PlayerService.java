@@ -23,8 +23,8 @@ public interface PlayerService  {
 
 
     public GameDiceDto playGame(Integer idPlayer);
-    public  PlayerDto getWiner();
-    public PlayerDto getLoser();
+    public  List<PlayerDto>  getWiner();
+    public List<PlayerDto>  getLoser();
     List<PlayerDto> getAllSuccessRate();
     double getAverageSuccessRate(Integer idPlayer);
 }
