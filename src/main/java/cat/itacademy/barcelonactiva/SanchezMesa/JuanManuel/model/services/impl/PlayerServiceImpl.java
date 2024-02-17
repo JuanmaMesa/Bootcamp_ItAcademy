@@ -28,26 +28,49 @@ public class PlayerServiceImpl implements PlayerService {
      private PlayerRepository repository;
      @Autowired
      private GameDiceRepository gameDiceRepository;
-
      @Autowired
      private GameService gameService;
 
-    @Override
-    public List<PlayerDto> getAllPlayers() {
-        List<PlayerEntity> players = repository.findAll();
-        return players.stream().map(PlayerMapper.MAPPER::playerToDto)
-                .collect(Collectors.toList());
-    }
-    @Override
-    public PlayerEntity getOnePlayer(Integer id) {
-        return repository.findById(id)
-                .orElseThrow(()-> new PlayerNotFoundException("Not found player with id: " +id));
-    }
     @Override
     public PlayerDto createPlayer(PlayerDto dto) {
         PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
         playerEntity  = repository.save(playerEntity);
         return PlayerMapper.MAPPER.playerToDto(playerEntity);
+    }
+    @Override
+    public List<PlayerDto> getAllPlayers() {
+        List<PlayerEntity> players = repository.findAll();
+
+        return players.stream().map(player->{
+           PlayerDto playerDto = PlayerMapper.MAPPER.playerToDto(player);
+
+           int totalGamesPlayed = player.getGames().size();
+           playerDto.setGamesPlayed(totalGamesPlayed);
+
+           double averageSuccessRate = getAverageSuccessRate(player.getPlayerID());
+           playerDto.setAverageSuccessRate(averageSuccessRate);
+
+           return playerDto;
+
+        }).toList();
+    }
+
+    public double getAverageSuccessRate(Integer idPlayer) {
+        List<GameDiceEntity> allGames = getAllGamesPlayer(idPlayer);
+        if(allGames.isEmpty()) return 0.0;
+
+        double winRate = (double) allGames.stream()
+                .filter(GameDiceEntity::isWin)
+                .count() / allGames.size() *100;
+
+        winRate = Math.round(winRate *100.0)/100.0;
+        return winRate;
+
+    }
+    @Override
+    public PlayerEntity getOnePlayer(Integer id) {
+        return repository.findById(id)
+                .orElseThrow(()-> new PlayerNotFoundException("Not found player with id: " +id));
     }
     @Override
     public PlayerDto updatePlayer(Integer id, PlayerDto dto) {
@@ -59,6 +82,14 @@ public class PlayerServiceImpl implements PlayerService {
 
         return PlayerMapper.MAPPER.playerToDto(updatePlayer);
     }
+    @Override
+    public void deletePlayer(Integer idPlayer) {
+        PlayerEntity existingPlayer = repository.findById(idPlayer).
+                orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+idPlayer));
+        repository.deleteById(existingPlayer.getPlayerID());
+
+    }
+
 
     @Override
     public List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer) {
@@ -77,19 +108,15 @@ public class PlayerServiceImpl implements PlayerService {
     public void deleteAllGamesPlayer(Integer idPlayer) {
             PlayerEntity existingPlayer = repository.findById(idPlayer).
                     orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+idPlayer));
-            repository.deleteById(existingPlayer.getPlayerID());
+
+            gameService.deleteAllGames(existingPlayer);
 
     }
-
-
-    @Override
-    public PlayerDto findById(Integer id) {
-        PlayerEntity playerEntity = repository.findById(id)
-                .orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: " + id));
-
-        return PlayerMapper.MAPPER.playerToDto(playerEntity);
+    public int numberGamesPlayed (Integer playerId){
+        PlayerEntity player = repository.findById(playerId)
+                .orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID: "+playerId));
+        return player.getGames().size();
     }
-
 
     @Override
     public List<PlayerDto>  getWiner() {
@@ -101,7 +128,7 @@ public class PlayerServiceImpl implements PlayerService {
 
 
 
-        return getAllPlayers().stream()
+        return getAllSuccessRate().stream()
                 .filter(player -> player.getAverageSuccessRate() == maxSuccessAverage)
                 .toList();
     }
@@ -114,7 +141,7 @@ public class PlayerServiceImpl implements PlayerService {
                 .map(PlayerDto::getAverageSuccessRate)
                 .orElseThrow(NoSuchElementException::new);
 
-        return getAllPlayers().stream()
+        return getAllSuccessRate().stream()
                 .filter(player -> player.getAverageSuccessRate() == minSuccessAverage)
                 .toList();
     }
@@ -122,26 +149,16 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<PlayerDto> getAllSuccessRate() {
         List<PlayerDto> playersDtoList = getAllPlayers();
-        playersDtoList.forEach( player ->{
+        /*playersDtoList.forEach( player ->{
             double averageSuccessRate = getAverageSuccessRate(player.getPlayerID());
             player.setAverageSuccessRate(averageSuccessRate);
-                });
+                });*/
 
         return playersDtoList.stream()
                 .sorted(Comparator.comparing(PlayerDto::getAverageSuccessRate).reversed())
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public double getAverageSuccessRate(Integer idPlayer) {
-        List<GameDiceEntity> allGames = getAllGamesPlayer(idPlayer);
-        long totalGames = allGames.size();
-        long gamesWin = allGames.stream()
-                .filter(GameDiceEntity::isWin)
-                .count();
-
-        return totalGames > 0 ? ((double) gamesWin / totalGames) *100:0;
-    }
 
 
 }

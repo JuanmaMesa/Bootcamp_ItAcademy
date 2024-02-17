@@ -14,6 +14,7 @@ public class PlayerDto {
     private String password;
     private LocalDateTime registrationDate;
     private double averageSuccessRate;
+    private int gamesPlayed;
 
 
     public void setName(String name) {

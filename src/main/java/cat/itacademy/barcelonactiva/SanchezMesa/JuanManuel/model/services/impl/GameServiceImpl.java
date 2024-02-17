@@ -47,10 +47,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void deleteAllGames(PlayerDto playerDto) {
-        PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(playerDto);
+    public void deleteAllGames(PlayerEntity playerEntity) {
         List<GameDiceEntity> allGames = playerEntity.getGames();
-        //GameRepository.deleteAll();
+        gameDiceRepository.deleteAll();
+
     }
 }
 

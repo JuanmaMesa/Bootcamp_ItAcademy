@@ -10,6 +10,6 @@ public interface GameService {
 
         GameDiceDto createGame(PlayerEntity playerEntity);
         List<GameDiceDto> getAllGames(PlayerDto playerDto);
-        void deleteAllGames(PlayerDto playerDto);
+        void deleteAllGames(PlayerEntity playerEntity);
 
 }

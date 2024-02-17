@@ -7,24 +7,19 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
 
 import java.util.List;
 public interface PlayerService  {
-    public List<PlayerDto> getAllPlayers();
+    List<PlayerDto> getAllPlayers();
+    PlayerEntity getOnePlayer(Integer id);
+    PlayerDto updatePlayer(Integer id, PlayerDto dto);
+    PlayerDto createPlayer(PlayerDto dto);
+    void deletePlayer(Integer playerID);
 
-    public PlayerEntity getOnePlayer(Integer id);
-
-    public PlayerDto updatePlayer(Integer id, PlayerDto dto);
-
-    public PlayerDto createPlayer(PlayerDto dto);
-    public List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer);
-
-    public void deleteAllGamesPlayer(Integer idPlayer);
-
-    public PlayerDto findById(Integer id);
+    List<PlayerDto>  getWiner();
+    List<PlayerDto>  getLoser();
 
 
-
-    public GameDiceDto playGame(Integer idPlayer);
-    public  List<PlayerDto>  getWiner();
-    public List<PlayerDto>  getLoser();
+    GameDiceDto playGame(Integer idPlayer);
+    List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer);
+    void deleteAllGamesPlayer(Integer idPlayer);
     List<PlayerDto> getAllSuccessRate();
     double getAverageSuccessRate(Integer idPlayer);
 }

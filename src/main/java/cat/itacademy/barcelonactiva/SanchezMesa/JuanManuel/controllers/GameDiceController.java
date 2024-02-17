@@ -24,6 +24,7 @@ public class GameDiceController {
     @Autowired
     private GameService gameService;
 
+    //  --- Player ---
     @PostMapping("")
     public ResponseEntity<Map<String, Object>>newPlayer(@RequestBody PlayerDto playerDto){
          PlayerDto playerDto1 = playerService.createPlayer(playerDto);
@@ -37,13 +38,22 @@ public class GameDiceController {
     public ResponseEntity<List<PlayerDto>> getAllPlayers(){
         List<PlayerDto>playerDtoList = playerService.getAllPlayers();
         return new ResponseEntity<>(playerDtoList, HttpStatus.OK);
-        // TODO  mostrar porcentage de exito
     }
     @PutMapping("/{id}")
     public ResponseEntity<String>updatePlayer(@PathVariable("id") Integer id, @RequestBody PlayerDto playerDto){
         playerService.updatePlayer(id, playerDto);
         return new ResponseEntity<>("Player update successfully", HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePlayer(@PathVariable("id") Integer id){
+        playerService.deletePlayer(id);
+        return new ResponseEntity<>("Player deleted SuccessFully ", HttpStatus.OK);
+    }
+
+
+    // --- Games ---
+
     @PostMapping("/{id}/games")
     public ResponseEntity<GameDiceDto> play(@PathVariable("id") Integer id){
         GameDiceDto newGame = playerService.playGame(id);
@@ -58,10 +68,16 @@ public class GameDiceController {
     }
 
     @GetMapping("/{id}/games")
-    public ResponseEntity<List<GameDiceDto>> getAllGamesPlayer(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getAllGamesPlayer(@PathVariable("id") Integer id){
         List<GameDiceEntity> gameDiceEntityList = playerService.getAllGamesPlayer(id);
-        List<GameDiceDto> allGames = GameDiceMApper.MAPPER.gameDiceToDtoList(gameDiceEntityList);
-        return new ResponseEntity<>(allGames, HttpStatus.OK);
+        if( gameDiceEntityList.isEmpty()){
+            return new ResponseEntity<>("No Games found for player with ID: " + id, HttpStatus.NOT_FOUND);
+        } else {
+
+            List<GameDiceDto> allGames = GameDiceMApper.MAPPER.gameDiceToDtoList(gameDiceEntityList);
+
+            return new ResponseEntity<>(allGames, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/ranking")
@@ -80,7 +96,7 @@ public class GameDiceController {
     }
 
     @GetMapping("/ranking/winner")
-    public ResponseEntity<List<PlayerDto>>  getRankingwinner(){
+    public ResponseEntity<List<PlayerDto>> getRankingwinner(){
         List<PlayerDto>playerDtoWinner = playerService.getWiner();
 
         return new ResponseEntity<>(playerDtoWinner, HttpStatus.OK);
