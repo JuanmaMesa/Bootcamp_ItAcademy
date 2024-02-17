@@ -80,6 +80,13 @@ public class PlayerServiceImpl implements PlayerService {
     public PlayerDto updatePlayer(Integer id, PlayerDto dto) {
         PlayerEntity playerEntity =  repository.findById(id)
                 .orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID:"+ id));
+
+        if(!playerEntity.getName().equalsIgnoreCase(dto.getName())){ // conflictos con su propio nombre
+            Optional<PlayerEntity> existingPlayer = repository.findByNameIgnoreCase(dto.getName());
+                if(existingPlayer.isPresent()){
+                    throw new PlayerAlreadyExistException("Oops, the player name is already taken.");
+                }
+        }
         playerEntity.setName(dto.getName());
         playerEntity.setPassword(dto.getPassword());
         PlayerEntity updatePlayer = repository.save(playerEntity);
