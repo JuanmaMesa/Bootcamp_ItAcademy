@@ -32,11 +32,6 @@ public class PlayerEntity {
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<GameDiceEntity> games;
 
-    public PlayerEntity(String playerName, String password) {
-        this.playerName = playerName;
-        this.password = password;
-    }
-
 
     @PrePersist
     protected void onCreate() {

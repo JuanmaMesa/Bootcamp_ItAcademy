@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class PlayerServiceImpl implements PlayerService, UserDetailsService {
+public class PlayerServiceImpl implements PlayerService {
      @Autowired
      private PlayerRepository playerRepository;
      @Autowired
@@ -84,14 +84,13 @@ public class PlayerServiceImpl implements PlayerService, UserDetailsService {
         PlayerEntity playerEntity =  playerRepository.findById(id)
                 .orElseThrow(()-> new PlayerNotFoundException("Player Not found with ID:"+ id));
 
-        if(!playerEntity.getName().equalsIgnoreCase(dto.getName())){ // conflictos con su propio nombre
+        if(!playerEntity.getPlayerName().equalsIgnoreCase(dto.getName())){ // conflictos con su propio nombre
             Optional<PlayerEntity> existingPlayer = playerRepository.findByNameIgnoreCase(dto.getName());
                 if(existingPlayer.isPresent()){
                     throw new PlayerAlreadyExistException("Oops, the player name is already taken.");
                 }
         }
-        playerEntity.setName(dto.getName());
-        playerEntity.setPassword(dto.getPassword());
+        playerEntity.setPlayerName(dto.getName());
         PlayerEntity updatePlayer = playerRepository.save(playerEntity);
 
         return PlayerMapper.MAPPER.playerToDto(updatePlayer);
@@ -171,7 +170,9 @@ public class PlayerServiceImpl implements PlayerService, UserDetailsService {
     }
 
 
-    @Override
+
+
+    /*@Override
     public UserDetailsService userDetailsService() {
         return username -> {
             PlayerEntity player = playerRepository.findByNameIgnoreCase(username)
@@ -185,6 +186,6 @@ public class PlayerServiceImpl implements PlayerService, UserDetailsService {
         PlayerEntity player = playerRepository.findByNameIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Player not found with username: " + username));
         return new org.springframework.security.core.userdetails.User(player.getName(), player.getPassword(), new ArrayList<>());
-    }
+    }*/
 }
 

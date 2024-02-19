@@ -11,7 +11,6 @@ public class PlayerDto {
 
     private Integer playerID;
     private String name;
-    private String password;
     private LocalDateTime registrationDate;
     private double averageSuccessRate;
     private int gamesPlayed;

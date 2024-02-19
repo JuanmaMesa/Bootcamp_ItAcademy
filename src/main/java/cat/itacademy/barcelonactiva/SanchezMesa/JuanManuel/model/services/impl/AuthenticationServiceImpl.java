@@ -1,18 +1,20 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.impl;
-
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEntity;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dao.request.SignInRequest;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dao.request.SignUpRequest;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.User;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.enums.Role;
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.PlayerRepository;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerAlreadyExistException;
+
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dao.response.JwtAuthenticationResponse;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerNotFoundException;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.UserRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.AuthenticationService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.JwtService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,58 +23,59 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl  implements AuthenticationService {
 
-    private final PlayerRepository playerRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final PlayerService playerService;
+    private final UserRepository userRepository;
 
 
     @Override
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
-        PlayerEntity playerEntity = PlayerEntity.builder()
-                .name(request.getName())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.PLAYER)
-                .build();
-        playerRepository.save(playerEntity);
+        try {
+            var user = User.builder().
+                    firstName(request.getFirstName()).lastName(request.getLastName())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.PLAYER).build();
+            userRepository.save(user);
 
-        // necesitamos convertir playerEntity a UserDetails
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                playerEntity.getName(),
-                playerEntity.getPassword(),
-                AuthorityUtils.createAuthorityList("ROLE_" + playerEntity.getRole().name())
-        );
+            var jwt = jwtService.generateToken(user);
+            return JwtAuthenticationResponse.builder().
+                    token(jwt)
+                    .message("User created succesfully")
+                    .build();
+        } catch (Exception e) {
+            throw new PlayerAlreadyExistException("User already exist.");
+        }
 
-
-                String jwtToken = jwtService.generateToken(userDetails);
-        return JwtAuthenticationResponse.builder()
-                .token(jwtToken)
-                .message("User created successfully")
-                .build();
     }
-
-
     @Override
     public JwtAuthenticationResponse signIn(SignInRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getName(),
-                        request.getPassword()
-                )
-        );
-        UserDetails userDetails = playerService.userDetailsService().loadUserByUsername(request.getName());
-        String jwtToken = jwtService.generateToken(userDetails);
-        return JwtAuthenticationResponse.builder()
-                .token(jwtToken)
-                .message("Authentication successful")
-                .build();
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()));
+
+            var user = userRepository.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new PlayerNotFoundException("Player Not found with email: " + request.getEmail()));
+
+            var jwt = jwtService.generateToken(user);
+            return JwtAuthenticationResponse
+                    .builder()
+                    .token(jwt)
+                    .message("Authentication successful")
+                    .build();
+
+
+        } catch (Exception e){
+            throw new BadCredentialsException("password not valid.");
     }
-
-
-
-
-
 }
+}
+
+
 
 

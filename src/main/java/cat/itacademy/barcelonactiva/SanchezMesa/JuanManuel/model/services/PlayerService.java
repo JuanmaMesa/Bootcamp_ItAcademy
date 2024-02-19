@@ -24,6 +24,5 @@ public interface PlayerService  {
     List<PlayerDto> getAllSuccessRate();
     double getAverageSuccessRate(Integer idPlayer);
 
-    UserDetailsService userDetailsService();
 
 }
