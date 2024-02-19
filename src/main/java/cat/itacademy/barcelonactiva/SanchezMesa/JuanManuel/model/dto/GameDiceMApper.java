@@ -11,12 +11,12 @@ import java.util.List;
 public interface GameDiceMApper {
     GameDiceMApper MAPPER = Mappers.getMapper(GameDiceMApper.class);
 
-    @Mapping(target = "id", source = "id")
+    //@Mapping(target = "id", source = "id")
     GameDiceDto gameDiceToDto(GameDiceEntity gameDiceEntity);
-    @Mapping(target = "id", source = "id")
+    //@Mapping(target = "id", source = "id")
     List<GameDiceDto>gameDiceToDtoList(List<GameDiceEntity> gameDiceEntity);
 
-    @Mapping(target = "id", source = "id")
+    //@Mapping(target = "id", source = "id")
     GameDiceEntity dtoGameDice(GameDiceDto gameDiceDto);
 
 

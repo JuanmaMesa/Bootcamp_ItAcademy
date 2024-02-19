@@ -1,4 +1,4 @@
-package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.security.response;
+package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dao.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JwtAuthenticationResponse {
+public class SignUpRequest {
 
-    private String token;
+    private String name;
+    private String password;
 
 }

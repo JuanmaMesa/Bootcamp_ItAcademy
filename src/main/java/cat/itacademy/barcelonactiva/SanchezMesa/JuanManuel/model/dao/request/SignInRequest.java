@@ -1,4 +1,4 @@
-package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.request;
+package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dao.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
