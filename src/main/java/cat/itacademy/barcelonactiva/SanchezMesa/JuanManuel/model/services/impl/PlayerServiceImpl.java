@@ -34,6 +34,24 @@ public class PlayerServiceImpl implements PlayerService {
         playerEntity = playerRepository.save(playerEntity);
         return PlayerMapper.MAPPER.playerToDto(playerEntity);
     }
+    @Override
+    public PlayerDto getDtoPlayer(Integer id) {
+        PlayerEntity playerEntity = getOnePlayer(id);
+        PlayerDto playerDto = PlayerMapper.MAPPER.playerToDto(playerEntity);
+
+        int totalGamesPlayed = playerEntity.getGames().size();
+        playerDto.setGamesPlayed(totalGamesPlayed);
+
+        double averageSuccssRate = getAverageSuccessRate(playerEntity.getPlayerID());
+        playerDto.setAverageSuccessRate(averageSuccssRate);
+
+        return playerDto;
+
+
+
+    }
+
+
 
     @Override
     public List<PlayerDto> getAllPlayers() {
@@ -95,6 +113,7 @@ public class PlayerServiceImpl implements PlayerService {
                 orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID: " + idPlayer));
         playerRepository.deleteById(existingPlayer.getPlayerID());
     }
+
 
     @Override
     public List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer) {

@@ -13,6 +13,7 @@ public interface PlayerService  {
     PlayerDto updatePlayer(Integer id, PlayerDto dto);
     PlayerDto createPlayer(PlayerDto dto);
     void deletePlayer(Integer playerID);
+    PlayerDto getDtoPlayer(Integer id);
 
     List<PlayerDto>  getWiner();
     List<PlayerDto>  getLoser();

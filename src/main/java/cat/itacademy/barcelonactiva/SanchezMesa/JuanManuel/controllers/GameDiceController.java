@@ -5,6 +5,7 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEn
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceMApper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
+import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerMapper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.GameService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class GameDiceController {
     public ResponseEntity<List<PlayerDto>> getAllPlayers(){
         List<PlayerDto>playerDtoList = playerService.getAllPlayers();
         return new ResponseEntity<>(playerDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/one/{id}")
+    public ResponseEntity<PlayerDto> getPlayer(@PathVariable("id") Integer id, @RequestBody PlayerDto playerDto){
+        PlayerDto playerDto1 = playerService.getDtoPlayer(id);
+        return new ResponseEntity<>(playerDto1, HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<String>updatePlayer(@PathVariable("id") Integer id, @RequestBody PlayerDto playerDto){
