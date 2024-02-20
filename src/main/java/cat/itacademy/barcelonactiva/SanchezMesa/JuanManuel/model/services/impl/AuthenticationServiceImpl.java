@@ -28,7 +28,7 @@ public class AuthenticationServiceImpl  implements AuthenticationService {
 
     @Override
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
-        //try {
+        try {
             var user = User.builder().
                     firstName(request.getFirstName())
                     .lastName(request.getLastName())
@@ -43,9 +43,9 @@ public class AuthenticationServiceImpl  implements AuthenticationService {
                     token(jwt)
                     .message("User created succesfully")
                     .build();
-        //} catch (Exception e) {
-           // throw new PlayerAlreadyExistException("User already exist.");
-        //}
+        } catch (Exception e) {
+            throw new PlayerAlreadyExistException("User already exist.");
+        }
 
     }
     @Override
