@@ -22,8 +22,9 @@ public class PlayerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer playerID;
 
-    @Column(name = "PlayerName", length = 50)
+    @Column(name = "playerName", length = 50)
     private String playerName;
+
 
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;

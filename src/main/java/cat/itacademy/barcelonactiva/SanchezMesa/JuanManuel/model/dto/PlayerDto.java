@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 public class PlayerDto {
 
     private Integer playerID;
-    private String name;
+    private String playerName;
     private LocalDateTime registrationDate;
     private double averageSuccessRate;
     private int gamesPlayed;
 
 
-    public void setName(String name) {
-        this.name = (name == null || name.trim().isEmpty())? "UNKNOWN" : name;    }
+    public void setPlayerName(String playerName) {
+        this.playerName = (playerName == null || playerName.trim().isEmpty())? "UNKNOWN" : playerName;    }
 }

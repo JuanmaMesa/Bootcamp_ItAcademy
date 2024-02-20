@@ -4,18 +4,15 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dao.request.Sig
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.User;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.enums.Role;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerAlreadyExistException;
-
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dao.response.JwtAuthenticationResponse;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.exceptions.PlayerNotFoundException;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.UserRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.AuthenticationService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.JwtService;
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +23,6 @@ public class AuthenticationServiceImpl  implements AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final PlayerService playerService;
     private final UserRepository userRepository;
 
 
@@ -34,10 +30,12 @@ public class AuthenticationServiceImpl  implements AuthenticationService {
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
         try {
             var user = User.builder().
-                    firstName(request.getFirstName()).lastName(request.getLastName())
+                    firstName(request.getFirstName())
+                    .lastName(request.getLastName())
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
-                    .role(Role.PLAYER).build();
+                    .role(Role.PLAYER)
+                    .build();
             userRepository.save(user);
 
             var jwt = jwtService.generateToken(user);

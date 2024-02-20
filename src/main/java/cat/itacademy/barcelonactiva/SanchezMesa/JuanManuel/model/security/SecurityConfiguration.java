@@ -1,6 +1,4 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.security;
-
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,8 +27,9 @@ public class SecurityConfiguration {
     private final UserService userService;
     private final AuthEntryPointJwt unauthorizedHandler;
 
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
@@ -68,5 +68,3 @@ public class SecurityConfiguration {
         return config.getAuthenticationManager();
     }
 }
-
-

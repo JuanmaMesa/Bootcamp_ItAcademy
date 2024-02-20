@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<PlayerEntity,Integer> {
-    Optional<PlayerEntity> findByNameIgnoreCase(String name);
-    Optional<PlayerEntity> findByPassword (String password);
+    //Optional<PlayerEntity> findByNameIgnoreCase(String playerName);
+    Optional<PlayerEntity> findByPlayerNameIgnoreCase(String playerName);
+
 }
