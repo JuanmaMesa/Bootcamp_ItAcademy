@@ -4,28 +4,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "GameDice")
+@Document(collection = "gamedice")
 public class GameDiceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
-    @Column(name = "dice1")
     private byte dice1;
-
-    @Column(name = "dice2")
     private byte dice2;
-
-    @Column(name = "win")
     private boolean win;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "playerID")
     private PlayerEntity player;
 
     @Transient

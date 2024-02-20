@@ -9,21 +9,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 public interface PlayerService  {
     List<PlayerDto> getAllPlayers();
-    PlayerEntity getOnePlayer(Integer id);
-    PlayerDto updatePlayer(Integer id, PlayerDto dto);
+    PlayerEntity getOnePlayer(String id);
+    PlayerDto updatePlayer(String id, PlayerDto dto);
     PlayerDto createPlayer(PlayerDto dto);
-    void deletePlayer(Integer playerID);
-    PlayerDto getDtoPlayer(Integer id);
+    void deletePlayer(String playerID);
+    PlayerDto getDtoPlayer(String id);
+
 
     List<PlayerDto>  getWiner();
     List<PlayerDto>  getLoser();
 
 
-    GameDiceDto playGame(Integer idPlayer);
-    List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer);
-    void deleteAllGamesPlayer(Integer idPlayer);
+    GameDiceDto playGame(String idPlayer);
+    List<GameDiceEntity> getAllGamesPlayer(String idPlayer);
+    void deleteAllGamesPlayer(String idPlayer);
     List<PlayerDto> getAllSuccessRate();
-    double getAverageSuccessRate(Integer idPlayer);
+    double getAverageSuccessRate(String idPlayer);
 
 
 }

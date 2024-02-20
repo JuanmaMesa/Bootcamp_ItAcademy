@@ -5,7 +5,6 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEn
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceMApper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerMapper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.mechanics.RandomDice;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.GameDiceRepository;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.repository.PlayerRepository;
@@ -37,7 +36,8 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameDiceDto> getAllGames(PlayerDto playerDto) {
-        List<GameDiceEntity> gameDiceEntityList = gameDiceRepository.findAll();
+       List<GameDiceEntity> gameDiceEntityList = gameDiceRepository.findAll();
+
         List<GameDiceDto> gameDiceDtoList = new ArrayList<>();
 
         gameDiceEntityList.stream()

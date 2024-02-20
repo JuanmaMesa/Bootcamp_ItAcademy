@@ -35,7 +35,7 @@ public class PlayerServiceImpl implements PlayerService {
         return PlayerMapper.MAPPER.playerToDto(playerEntity);
     }
     @Override
-    public PlayerDto getDtoPlayer(Integer id) {
+    public PlayerDto getDtoPlayer(String id) {
         PlayerEntity playerEntity = getOnePlayer(id);
         PlayerDto playerDto = PlayerMapper.MAPPER.playerToDto(playerEntity);
 
@@ -47,15 +47,12 @@ public class PlayerServiceImpl implements PlayerService {
 
         return playerDto;
 
-
-
     }
-
 
 
     @Override
     public List<PlayerDto> getAllPlayers() {
-        List<PlayerEntity> players = playerRepository.findAll();
+        List<PlayerEntity> players = (List<PlayerEntity>) playerRepository.findAll();
 
         return players.stream().map(player -> {
             PlayerDto playerDto = PlayerMapper.MAPPER.playerToDto(player);
@@ -71,7 +68,7 @@ public class PlayerServiceImpl implements PlayerService {
         }).toList();
     }
 
-    public double getAverageSuccessRate(Integer idPlayer) {
+    public double getAverageSuccessRate(String idPlayer) {
         List<GameDiceEntity> allGames = getAllGamesPlayer(idPlayer);
         if (allGames.isEmpty()) return 0.0;
 
@@ -85,14 +82,14 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public PlayerEntity getOnePlayer(Integer id) {
-        return playerRepository.findById(id)
+    public PlayerEntity getOnePlayer(String id) {
+        return playerRepository.findById(Integer.valueOf(id))
                 .orElseThrow(() -> new PlayerNotFoundException("Not found player with id: " + id));
     }
 
     @Override
-    public PlayerDto updatePlayer(Integer id, PlayerDto dto) {
-        PlayerEntity playerEntity = playerRepository.findById(id)
+    public PlayerDto updatePlayer(String id, PlayerDto dto) {
+        PlayerEntity playerEntity = playerRepository.findById(Integer.valueOf(id))
                 .orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID:" + id));
 
         if (!playerEntity.getPlayerName().equalsIgnoreCase(dto.getPlayerName())) { // conflictos con su propio nombre
@@ -108,37 +105,37 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public void deletePlayer(Integer idPlayer) {
-        PlayerEntity existingPlayer = playerRepository.findById(idPlayer).
+    public void deletePlayer(String idPlayer) {
+        PlayerEntity existingPlayer = playerRepository.findById(Integer.valueOf(idPlayer)).
                 orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID: " + idPlayer));
-        playerRepository.deleteById(existingPlayer.getPlayerID());
+        playerRepository.deleteById(Integer.valueOf(existingPlayer.getPlayerID()));
     }
 
 
     @Override
-    public List<GameDiceEntity> getAllGamesPlayer(Integer idPlayer) {
+    public List<GameDiceEntity> getAllGamesPlayer(String idPlayer) {
         PlayerEntity playerEntity = getOnePlayer(idPlayer);
         return playerEntity.getGames();
     }
 
     @Override
-    public GameDiceDto playGame(Integer idPlayer) {
+    public GameDiceDto playGame(String idPlayer) {
         PlayerEntity player = getOnePlayer(idPlayer);
 
         return gameService.createGame(player);
     }
 
     @Override
-    public void deleteAllGamesPlayer(Integer idPlayer) {
-        PlayerEntity existingPlayer = playerRepository.findById(idPlayer).
+    public void deleteAllGamesPlayer(String idPlayer) {
+        PlayerEntity existingPlayer = playerRepository.findById(Integer.valueOf(idPlayer)).
                 orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID: " + idPlayer));
 
         gameService.deleteAllGames(existingPlayer);
 
     }
 
-    public int numberGamesPlayed(Integer playerId) {
-        PlayerEntity player = playerRepository.findById(playerId)
+    public int numberGamesPlayed(String playerId) {
+        PlayerEntity player = playerRepository.findById(Integer.valueOf(playerId))
                 .orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID: " + playerId));
         return player.getGames().size();
     }

@@ -42,18 +42,18 @@ public class GameDiceController {
     }
 
     @GetMapping("/one/{id}")
-    public ResponseEntity<PlayerDto> getPlayer(@PathVariable("id") Integer id, @RequestBody PlayerDto playerDto){
+    public ResponseEntity<PlayerDto> getPlayer(@PathVariable("id") String id, @RequestBody PlayerDto playerDto){
         PlayerDto playerDto1 = playerService.getDtoPlayer(id);
         return new ResponseEntity<>(playerDto1, HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<String>updatePlayer(@PathVariable("id") Integer id, @RequestBody PlayerDto playerDto){
+    public ResponseEntity<String>updatePlayer(@PathVariable("id") String id, @RequestBody PlayerDto playerDto){
         playerService.updatePlayer(id, playerDto);
         return new ResponseEntity<>("Player update successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deletePlayer(@PathVariable("id") Integer id){
+    public ResponseEntity<String> deletePlayer(@PathVariable("id") String id){
         playerService.deletePlayer(id);
         return new ResponseEntity<>("Player deleted SuccessFully ", HttpStatus.OK);
     }
@@ -62,20 +62,20 @@ public class GameDiceController {
     // --- Games ---
 
     @PostMapping("/{id}/games")
-    public ResponseEntity<GameDiceDto> play(@PathVariable("id") Integer id){
+    public ResponseEntity<GameDiceDto> play(@PathVariable("id") String id){
         GameDiceDto newGame = playerService.playGame(id);
 
         return new ResponseEntity<>(newGame,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}/games")
-    public ResponseEntity<String> deleteAllGamesPlayer(@PathVariable("id") Integer id){
+    public ResponseEntity<String> deleteAllGamesPlayer(@PathVariable("id") String id){
         playerService.deleteAllGamesPlayer(id);
         return new ResponseEntity<>("All games deleted!", HttpStatus.OK);
     }
 
     @GetMapping("/{id}/games")
-    public ResponseEntity<?> getAllGamesPlayer(@PathVariable("id") Integer id){
+    public ResponseEntity<?> getAllGamesPlayer(@PathVariable("id") String id){
         List<GameDiceEntity> gameDiceEntityList = playerService.getAllGamesPlayer(id);
         if( gameDiceEntityList.isEmpty()){
             return new ResponseEntity<>("No Games found for player with ID: " + id, HttpStatus.NOT_FOUND);
