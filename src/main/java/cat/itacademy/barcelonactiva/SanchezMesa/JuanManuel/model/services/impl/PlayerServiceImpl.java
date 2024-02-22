@@ -30,8 +30,11 @@ public class PlayerServiceImpl implements PlayerService {
         if (existingPlayer.isPresent()) {
             throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
         }
+
         PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
+        playerEntity.prePersist();
         playerEntity = playerRepository.save(playerEntity);
+
         return PlayerMapper.MAPPER.playerToDto(playerEntity);
     }
     @Override
@@ -42,7 +45,7 @@ public class PlayerServiceImpl implements PlayerService {
         int totalGamesPlayed = playerEntity.getGames().size();
         playerDto.setGamesPlayed(totalGamesPlayed);
 
-        double averageSuccssRate = getAverageSuccessRate(playerEntity.getPlayerID());
+        double averageSuccssRate = getAverageSuccessRate(playerEntity.getId());
         playerDto.setAverageSuccessRate(averageSuccssRate);
 
         return playerDto;
@@ -60,7 +63,7 @@ public class PlayerServiceImpl implements PlayerService {
             int totalGamesPlayed = player.getGames().size();
             playerDto.setGamesPlayed(totalGamesPlayed);
 
-            double averageSuccessRate = getAverageSuccessRate(player.getPlayerID());
+            double averageSuccessRate = getAverageSuccessRate(player.getId());
             playerDto.setAverageSuccessRate(averageSuccessRate);
 
             return playerDto;
@@ -83,13 +86,13 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public PlayerEntity getOnePlayer(String id) {
-        return playerRepository.findById(Integer.valueOf(id))
+        return playerRepository.findById(id)
                 .orElseThrow(() -> new PlayerNotFoundException("Not found player with id: " + id));
     }
 
     @Override
     public PlayerDto updatePlayer(String id, PlayerDto dto) {
-        PlayerEntity playerEntity = playerRepository.findById(Integer.valueOf(id))
+        PlayerEntity playerEntity = playerRepository.findById(id)
                 .orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID:" + id));
 
         if (!playerEntity.getPlayerName().equalsIgnoreCase(dto.getPlayerName())) { // conflictos con su propio nombre
@@ -106,9 +109,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void deletePlayer(String idPlayer) {
-        PlayerEntity existingPlayer = playerRepository.findById(Integer.valueOf(idPlayer)).
+        PlayerEntity existingPlayer = playerRepository.findById(idPlayer).
                 orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID: " + idPlayer));
-        playerRepository.deleteById(Integer.valueOf(existingPlayer.getPlayerID()));
+        playerRepository.deleteById(existingPlayer.getId());
     }
 
 
@@ -127,7 +130,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void deleteAllGamesPlayer(String idPlayer) {
-        PlayerEntity existingPlayer = playerRepository.findById(Integer.valueOf(idPlayer)).
+        PlayerEntity existingPlayer = playerRepository.findById(idPlayer).
                 orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID: " + idPlayer));
 
         gameService.deleteAllGames(existingPlayer);
@@ -135,7 +138,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     public int numberGamesPlayed(String playerId) {
-        PlayerEntity player = playerRepository.findById(Integer.valueOf(playerId))
+        PlayerEntity player = playerRepository.findById(playerId)
                 .orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID: " + playerId));
         return player.getGames().size();
     }
@@ -179,6 +182,5 @@ public class PlayerServiceImpl implements PlayerService {
                 .sorted(Comparator.comparing(PlayerDto::getAverageSuccessRate).reversed())
                 .collect(Collectors.toList());
     }
-
 
 }

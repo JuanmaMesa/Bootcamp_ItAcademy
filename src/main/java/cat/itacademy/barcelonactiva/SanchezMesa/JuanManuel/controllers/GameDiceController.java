@@ -1,11 +1,11 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.controllers;
 
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.GameDiceEntity;
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEntity;
+
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceDto;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.GameDiceMApper;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerDto;
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto.PlayerMapper;
+
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.GameService;
 import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class GameDiceController {
     private GameService gameService;
 
     //  --- Player ---
-    @PostMapping("")
+    @PostMapping("/addplayer")
     public ResponseEntity<Map<String, Object>>newPlayer(@RequestBody PlayerDto playerDto){
          PlayerDto playerDto1 = playerService.createPlayer(playerDto);
         Map<String, Object> body = new HashMap<>();
@@ -35,7 +35,7 @@ public class GameDiceController {
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
-    @GetMapping("")
+    @GetMapping("/getplayer")
     public ResponseEntity<List<PlayerDto>> getAllPlayers(){
         List<PlayerDto>playerDtoList = playerService.getAllPlayers();
         return new ResponseEntity<>(playerDtoList, HttpStatus.OK);
@@ -80,18 +80,19 @@ public class GameDiceController {
         if( gameDiceEntityList.isEmpty()){
             return new ResponseEntity<>("No Games found for player with ID: " + id, HttpStatus.NOT_FOUND);
         } else {
-
             List<GameDiceDto> allGames = GameDiceMApper.MAPPER.gameDiceToDtoList(gameDiceEntityList);
-
             return new ResponseEntity<>(allGames, HttpStatus.OK);
         }
     }
 
     @GetMapping("/ranking")
-    public ResponseEntity<List<PlayerDto>> getRanking(){
-          List<PlayerDto> PlayersRanking = playerService.getAllSuccessRate();
+    public ResponseEntity<Map<String, Object>> getRanking(){
+          List<PlayerDto> playersRanking = playerService.getAllSuccessRate();
+          Map<String, Object> body = new HashMap<>();
+          body.put("message", "Player/1 number One");
+          body.put("playersRanking", playersRanking);
 
-            return new ResponseEntity<>(PlayersRanking, HttpStatus.OK);
+            return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
     @GetMapping("/ranking/loser")

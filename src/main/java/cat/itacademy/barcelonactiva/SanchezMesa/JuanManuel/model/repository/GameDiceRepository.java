@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface GameDiceRepository  extends MongoRepository<GameDiceEntity, Integer> {
+public interface GameDiceRepository  extends MongoRepository<GameDiceEntity, String> {
     List<GameDiceEntity> findByPlayer(PlayerEntity player);
 }
