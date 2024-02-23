@@ -25,10 +25,25 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public PlayerDto createPlayer(PlayerDto dto) {
-        Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
-
-        if (existingPlayer.isPresent()) {
-            throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
+        /*Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
+        if (existingPlayer.isPresent() ) {
+            if(existingPlayer.equals("UnkKnow")){
+                PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
+                playerEntity = playerRepository.save(playerEntity);
+            }else{
+                throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
+            }
+        }
+        PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
+        playerEntity = playerRepository.save(playerEntity);
+        return PlayerMapper.MAPPER.playerToDto(playerEntity);*/
+        if( dto.getPlayerName() == null || dto.getPlayerName().trim().isEmpty()){
+            dto.setPlayerName("ANONYMOUS");
+        }else{
+            Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
+            if(existingPlayer.isPresent()){
+                throw new PlayerAlreadyExistException("oops the player name is  already taken.");
+            }
         }
         PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
         playerEntity = playerRepository.save(playerEntity);
