@@ -43,20 +43,17 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameDiceDto> getAllGames(PlayerDto playerDto) {
-       List<GameDiceEntity> gameDiceEntityList = gameDiceRepository.findAll();
-
-        List<GameDiceDto> gameDiceDtoList = new ArrayList<>();
-
-        gameDiceEntityList.stream()
-                .toList().forEach(game -> gameDiceDtoList.add(GameDiceMApper.MAPPER.gameDiceToDto(game)));
-
-        return gameDiceDtoList;
+        return null;
     }
 
     @Override
     public void deleteAllGames(PlayerEntity playerEntity) {
-        List<GameDiceEntity> allGames = playerEntity.getGames();
-        gameDiceRepository.deleteAll();
+        List<GameDiceEntity> allGamesToDelete = playerEntity.getGames();
+        if(allGamesToDelete != null && !allGamesToDelete.isEmpty()){
+            gameDiceRepository.deleteAll(allGamesToDelete);
+            playerEntity.getGames().clear();
+
+        }
 
     }
 
