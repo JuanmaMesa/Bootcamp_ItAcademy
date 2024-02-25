@@ -17,5 +17,5 @@ public class PlayerDto {
 
 
     public void setPlayerName(String playerName) {
-        this.playerName = (playerName == null || playerName.trim().isEmpty())? "UNKNOWN" : playerName;    }
+        this.playerName = (playerName == null || playerName.trim().isEmpty())? "ANONYMOUS" : playerName;    }
 }

@@ -25,30 +25,21 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public PlayerDto createPlayer(PlayerDto dto) {
-        /*Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
-        if (existingPlayer.isPresent() ) {
-            if(existingPlayer.equals("UnkKnow")){
-                PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
-                playerEntity = playerRepository.save(playerEntity);
-            }else{
-                throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
-            }
-        }
-        PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
-        playerEntity = playerRepository.save(playerEntity);
-        return PlayerMapper.MAPPER.playerToDto(playerEntity);*/
-        if( dto.getPlayerName() == null || dto.getPlayerName().trim().isEmpty()){
+        if(dto.getPlayerName()== null || dto.getPlayerName().trim().isEmpty()){
             dto.setPlayerName("ANONYMOUS");
-        }else{
-            Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
-            if(existingPlayer.isPresent()){
-                throw new PlayerAlreadyExistException("oops the player name is  already taken.");
-            }
         }
-        PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
-        playerEntity = playerRepository.save(playerEntity);
-        return PlayerMapper.MAPPER.playerToDto(playerEntity);
-    }
+
+        List<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
+        if(!existingPlayer.isEmpty() && !dto.getPlayerName().equalsIgnoreCase("ANONYMOUS")){
+            throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
+
+        }
+        PlayerEntity playerEntity1 = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
+        playerEntity1 = playerRepository.save(playerEntity1);
+
+        return PlayerMapper.MAPPER.playerToDto(playerEntity1);
+
+        }
     @Override
     public PlayerDto getDtoPlayer(Integer id) {
         PlayerEntity playerEntity = getOnePlayer(id);
@@ -105,14 +96,15 @@ public class PlayerServiceImpl implements PlayerService {
                 .orElseThrow(() -> new PlayerNotFoundException("Not found player with id: " + id));
     }
 
+
     @Override
     public PlayerDto updatePlayer(Integer id, PlayerDto dto) {
         PlayerEntity playerEntity = playerRepository.findById(id)
                 .orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID:" + id));
 
         if (!playerEntity.getPlayerName().equalsIgnoreCase(dto.getPlayerName())) { // conflictos con su propio nombre
-            Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
-            if (existingPlayer.isPresent()) {
+            List<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
+            if (!existingPlayer.isEmpty() && !dto.getPlayerName().equalsIgnoreCase("ANONYMOUS") ) {
                 throw new PlayerAlreadyExistException("Oops, the player name is already taken.");
             }
         }
