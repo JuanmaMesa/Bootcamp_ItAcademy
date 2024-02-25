@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,9 +41,10 @@ class PlayerServiceImplTest {
     private GameDiceEntity gametest1;
     private GameDiceEntity gametest2;
     private GameDiceEntity gametest3;
-    private PlayerDto playerDTOTest1;
+    private PlayerDto playerDtoTest1;
     private PlayerDto playerDTOTest2;
     private List<PlayerEntity> playerEntityList;
+    private List<PlayerDto>playersDtoList;
 
 
     @BeforeEach
@@ -59,6 +61,15 @@ class PlayerServiceImplTest {
         playerTest1.getGames().add(gametest1);
         playerTest1.getGames().add(gametest2);
 
+        PlayerDto playerDtoTest1 = new PlayerDto();
+        playerDtoTest1.setId("abc1");
+        playerDtoTest1.setPlayerName("John");
+        playerDtoTest1.setRegistrationDate(LocalDateTime.of(2024, 2, 24, 17, 30));
+        playerDtoTest1.setAverageSuccessRate(75.5);
+        playerDtoTest1.setGamesPlayed(20);
+
+
+
 
         gametest1.setPlayer(playerTest1);
         gametest2.setPlayer(playerTest1);
@@ -67,12 +78,17 @@ class PlayerServiceImplTest {
         playerEntityList.add(playerTest1);
         //playerEntityList.add(playerTest2);
 
+        playersDtoList = new ArrayList<>();
+        playersDtoList.add(playerDtoTest1);
+
+
+
         // Simular el efecto de la eliminación en playerEntityList
-        Mockito.doAnswer(invocation -> {
+       /* Mockito.doAnswer(invocation -> {
             String id = invocation.getArgument(0);
             playerEntityList.removeIf(player -> player.getId().equals(id));
             return null; // Representa la eliminación
-        }).when(playerRepository).deleteById("abc1");
+        }).when(playerRepository).deleteById("abc1");*/
 
 
     }
@@ -85,6 +101,19 @@ class PlayerServiceImplTest {
 
         Assertions.assertEquals("John", result.getPlayerName(), "el nombre deberia ser john");
         Assertions.assertNotNull(result);
+    }
+
+    @Test
+    void getAllPlayersTest() {
+    Mockito.when(playerRepository.findAll()).thenReturn(playerEntityList);
+    Mockito.when(playerRepository.findById("abc1")).thenReturn(Optional.of(playerTest1));
+
+    List<PlayerDto> resultLst = playerService.getAllPlayers();
+
+    //Assertions.assertTrue(new ReflectionEquals(playersDtoList).matches(resultLst),"lista de playersDto");
+    Assertions.assertEquals(resultLst.size(),playersDtoList.size());
+
+
     }
 
 
@@ -122,21 +151,26 @@ class PlayerServiceImplTest {
 
         Mockito.verify(playerRepository).findById("abc1");
         Mockito.verify(gameService).deleteAllGames(playerTest1);
-
-
     }
 
     @Test
     void createPlayer() {
+        PlayerEntity playerNew = new PlayerEntity();
+        playerNew.setId("abc1");
+        playerNew.setPlayerName("John");
+
+        Mockito.when(playerRepository.findByPlayerNameIgnoreCase("John")).thenReturn(Optional.ofNullable(playerTest1));
+        Mockito.when(playerRepository.save(playerTest1)).thenReturn(playerTest1);
+
+
+        Assertions.assertEquals(playerDtoTest1,playerNew);
+
     }
 
     @Test
     void getDtoPlayer() {
     }
 
-    @Test
-    void getAllPlayers() {
-    }
 
     @Test
     void getAverageSuccessRate() {

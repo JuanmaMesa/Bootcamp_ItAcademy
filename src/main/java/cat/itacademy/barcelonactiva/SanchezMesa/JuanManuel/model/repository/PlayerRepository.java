@@ -4,10 +4,11 @@ import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain.PlayerEn
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends MongoRepository<PlayerEntity,String> {
-    Optional<PlayerEntity> findByPlayerNameIgnoreCase(String playerName);
+    List<PlayerEntity> findByPlayerNameIgnoreCase(String playerName);
 
 }

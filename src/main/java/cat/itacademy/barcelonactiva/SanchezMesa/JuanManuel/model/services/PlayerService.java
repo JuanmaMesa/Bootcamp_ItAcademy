@@ -11,7 +11,7 @@ public interface PlayerService  {
     List<PlayerDto> getAllPlayers();
     PlayerEntity getOnePlayer(String id);
     PlayerDto updatePlayer(String id, PlayerDto dto);
-    PlayerDto createPlayer(PlayerDto dto);
+    PlayerDto createPlayer(PlayerDto playerDto);
     void deletePlayer(String playerID);
     PlayerDto getDtoPlayer(String id);
 

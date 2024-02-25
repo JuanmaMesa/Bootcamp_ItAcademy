@@ -24,18 +24,20 @@ public class PlayerServiceImpl implements PlayerService {
     private GameService gameService;
 
     @Override
-    public PlayerDto createPlayer(PlayerDto dto) {
-        Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
-
-        if (existingPlayer.isPresent()) {
-            throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
+    public PlayerDto createPlayer(PlayerDto playerDto) {
+        if(playerDto.getPlayerName()== null || playerDto.getPlayerName().trim().isEmpty()){
+            playerDto.setPlayerName("ANONYMOUS");
         }
 
-        PlayerEntity playerEntity = PlayerMapper.MAPPER.dtoToPlayerEntity(dto);
-        playerEntity.prePersist();
-        playerEntity = playerRepository.save(playerEntity);
+        List<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(playerDto.getPlayerName());
+        if(!existingPlayer.isEmpty() && !playerDto.getPlayerName().equalsIgnoreCase("ANONYMOUS")){
+            throw new PlayerAlreadyExistException("oops the player name is  already taken. ");
 
-        return PlayerMapper.MAPPER.playerToDto(playerEntity);
+        }
+        PlayerEntity playerEntity1 = PlayerMapper.MAPPER.dtoToPlayerEntity(playerDto);
+        playerEntity1 = playerRepository.save(playerEntity1);
+
+        return PlayerMapper.MAPPER.playerToDto(playerEntity1);
     }
     @Override
     public PlayerDto getDtoPlayer(String id) {
@@ -96,8 +98,8 @@ public class PlayerServiceImpl implements PlayerService {
                 .orElseThrow(() -> new PlayerNotFoundException("Player Not found with ID:" + id));
 
         if (!playerEntity.getPlayerName().equalsIgnoreCase(dto.getPlayerName())) { // conflictos con su propio nombre
-            Optional<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
-            if (existingPlayer.isPresent()) {
+            List<PlayerEntity> existingPlayer = playerRepository.findByPlayerNameIgnoreCase(dto.getPlayerName());
+            if (!existingPlayer.isEmpty() && !dto.getPlayerName().equalsIgnoreCase("ANONYMOUS")) {
                 throw new PlayerAlreadyExistException("Oops, the player name is already taken.");
             }
         }
