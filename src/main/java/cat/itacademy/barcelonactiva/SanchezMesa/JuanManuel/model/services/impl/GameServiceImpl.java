@@ -49,8 +49,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public void deleteAllGames(PlayerEntity playerEntity) {
         List<GameDiceEntity> allGames = playerEntity.getGames();
-        gameDiceRepository.deleteAll();
-
+        if(allGames != null && !allGames.isEmpty()) {
+            gameDiceRepository.deleteAll();
+           
+        }
     }
 }
 

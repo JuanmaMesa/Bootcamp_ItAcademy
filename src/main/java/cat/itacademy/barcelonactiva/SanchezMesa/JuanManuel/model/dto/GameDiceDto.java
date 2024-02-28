@@ -1,6 +1,6 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.dto;
 
-import jakarta.persistence.Transient;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import lombok.*;
 
 @Getter
@@ -10,18 +10,21 @@ public class GameDiceDto {
     private Integer id;
     private byte dice1;
     private byte dice2;
-    private boolean win;
+    private boolean isWin;
+
+    private static final int WINNING_SUM = 7;
 
 
 
-public  GameDiceDto(byte dice1, byte dice2){
+
+    public  GameDiceDto(byte dice1, byte dice2){
     this.dice1 = dice1;
     this.dice2 = dice2;
-    if(dice1 + dice2 == 7){
-        this.win = true;
-    }else{
-        this.win = false;
-    }
+        this.isWin = dice1 + dice2 == WINNING_SUM;
 
 }
+    @JsonGetter("isWin")
+    public String getWin(){
+        return isWin?"Victory":"Defeat";
+    }
 }
