@@ -11,15 +11,9 @@ import java.util.List;
 public interface GameDiceMApper {
     GameDiceMApper MAPPER = Mappers.getMapper(GameDiceMApper.class);
 
-<<<<<<< HEAD
     @Mapping(target = "id", source = "id")
     GameDiceDto gameDiceToDto(GameDiceEntity gameDiceEntity);
     @Mapping(target = "id", source = "id")
-=======
-    //@Mapping(target = "id", source = "id")
-    GameDiceDto gameDiceToDto(GameDiceEntity gameDiceEntity);
-    //@Mapping(target = "id", source = "id")
->>>>>>> repo5/master
     List<GameDiceDto>gameDiceToDtoList(List<GameDiceEntity> gameDiceEntity);
 
     //@Mapping(target = "id", source = "id")

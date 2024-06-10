@@ -6,11 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-<<<<<<< HEAD
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-=======
->>>>>>> repo5/master
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +20,6 @@ import java.util.List;
     @NoArgsConstructor
     @AllArgsConstructor
     @Entity
-<<<<<<< HEAD
     @Document(collection = "user")
 
     public class User implements UserDetails {
@@ -34,15 +30,6 @@ import java.util.List;
         private String lastName;
 
         @Indexed(unique = true)
-=======
-    @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-    public class User implements UserDetails {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Integer id;
-        private String firstName;
-        private String lastName;
->>>>>>> repo5/master
         private String email;
         private String password;
         @Enumerated(EnumType.STRING)

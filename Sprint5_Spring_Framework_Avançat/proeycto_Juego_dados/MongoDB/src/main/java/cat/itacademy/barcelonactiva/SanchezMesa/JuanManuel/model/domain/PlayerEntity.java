@@ -1,5 +1,4 @@
 package cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.domain;
-<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.PrePersist;
 import org.springframework.data.annotation.Id;
@@ -54,48 +53,3 @@ public class PlayerEntity {
 
 }
 
-=======
-
-import cat.itacademy.barcelonactiva.SanchezMesa.JuanManuel.model.enums.Role;
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-
-@Entity
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "players")
-public class PlayerEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer playerID;
-
-    @Column(name = "playerName", length = 50)
-    private String playerName;
-
-
-    @Column(name = "registration_date")
-    private LocalDateTime registrationDate;
-
-
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<GameDiceEntity> games;
-
-
-    @PrePersist
-    protected void onCreate() {
-        registrationDate = LocalDateTime.now();
-    }
-
-}
-
-
->>>>>>> repo5/master
