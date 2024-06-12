@@ -1,8 +1,5 @@
 # temas cubiertos en este Sprint
-
-En este Sprint, vamos a hablar sobre cómo las aplicaciones de negocios necesitan almacenar y buscar información en algún tipo de sistema de almacenamiento.
-
-Para hacer esto correctamente, es importante entender cómo se diseñan las bases de datos. En este Sprint, aprenderemos a crear y organizar datos de manera efectiva.
+¡Bienvenido al emocionante mundo del desarrollo en Java! Durante mi experiencia en el bootcamp de Java en IT Academy, he adquirido habilidades fundamentales en programación orientada a objetos, manejo de datos y creación de aplicaciones robustas. ¡Sigue leyendo para descubrir más sobre mi viaje de aprendizaje y los proyectos que he desarrollado!" ¡Espero que te sea útil esta introducción para tu README!
 
 
 
