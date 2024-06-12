@@ -5,7 +5,7 @@
 Tecnologias utilizadas
 ---
 - Java
-- Base de datos (MYSQL, MongoDB)
+- Base de datos (MySQL, MongoDB)
 - Patrones de diseño
 - Spring Framework
 
