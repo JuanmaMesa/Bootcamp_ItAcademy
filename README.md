@@ -1,18 +1,23 @@
-# temas cubiertos en este Sprint
-¡Bienvenido al emocionante mundo del desarrollo en Java! Durante mi experiencia en el bootcamp de Java en IT Academy, he adquirido habilidades fundamentales en programación orientada a objetos, manejo de datos y creación de aplicaciones robustas. ¡Sigue leyendo para descubrir más sobre mi viaje de aprendizaje y los proyectos que he desarrollado!" ¡Espero que te sea útil esta introducción para tu README!
+# Proyecto de java en It Academy de Barcelona
+¡Bienvenido al emocionante mundo del desarrollo en Java! Durante mi experiencia en el bootcamp de Java en IT Academy, he adquirido habilidades fundamentales en programación orientada a objetos, manejo de datos y creación de aplicaciones robustas. ¡Sigue leyendo para descubrir más sobre mi viaje de aprendizaje y los proyectos que he desarrollado!" 
 
 
-
-
-Objetivos Generales
+Tecnologias utilizadas
 ---
-Diseñar y modelar estructuras de datos en bases de datos relacionales o SQL, así como en bases de datos documentales o NoSQL.
+- Java
+- Base de datos
+- Patrones de diseño
+- Spring Framework
 
 
-Objetivos Específicos
+Funcionalidades Principales
 ---
-Diseñar, modelar datos y realizar consultas con bases de datos relacionales: MySQL.
+- Gestión de perfiles de usuario
+- Creación, lectura, actualizacion, eliminación (CRUD) de datos en la base de datos
+- Uso de Spring Framework
+- Pruebas unitarias y de integración
 
-Diseñar, modelar datos y realizar consultas con bases de datos documentales: MongoDB.
+
+
 
 
