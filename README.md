@@ -1,5 +1,5 @@
 # Proyecto de java en It Academy de Barcelona
-¡Bienvenido al emocionante mundo del desarrollo en Java! Durante mi experiencia en el bootcamp de Java en IT Academy, he adquirido habilidades fundamentales en programación orientada a objetos, manejo de datos y creación de aplicaciones robustas. ¡Sigue leyendo para descubrir más sobre mi viaje de aprendizaje y los proyectos que he desarrollado!" 
+¡Bienvenido al emocionante mundo del desarrollo en Java! Durante mi experiencia en el bootcamp de Java en IT Academy, he adquirido habilidades fundamentales en programación orientada a objetos, manejo de datos y creación de aplicaciones robustas. ¡Sigue leyendo para descubrir más sobre mi viaje de aprendizaje y los proyectos que he desarrollado!
 
 
 Tecnologias utilizadas
