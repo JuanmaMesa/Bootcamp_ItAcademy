@@ -1,4 +1,4 @@
-- Exercici 1
+## Exercici 1
 
    En un grup de música hi ha diferents tipus d’instruments musicals. Hi ha instruments de vent, de corda i de percussió.
 
