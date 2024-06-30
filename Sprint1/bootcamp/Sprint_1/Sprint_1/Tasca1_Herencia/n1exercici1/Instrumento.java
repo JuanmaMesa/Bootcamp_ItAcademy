@@ -10,23 +10,21 @@ public abstract class Instrumento {
 	static {
 		System.out.println("La clase Instrumento se ha cargado.");
 	}
+
 	
-
-
 	public Instrumento(String nombre, double  precio) {
 		
 		this.nombre = nombre;
 		this.precio = precio;
 		id = instrumento;
 		instrumento++;
-		
 	}
 	
 	public String getNombre() {
 		
 		return nombre;
 	}
-	
+
 	public double getPrecio() {
 		
 		return precio;
@@ -41,14 +39,10 @@ public abstract class Instrumento {
 	public abstract String tocar();
 	
 	
-
-
 	public String toString() {
 		
 		return id +"- Instrumento "+ nombre+":";
-				
-		
-		
+							
 	}
 	
 }
