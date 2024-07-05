@@ -1,4 +1,4 @@
-package tasca1_Patterns1.nivell1_Singleton;
+package src.tasca1_Patterns1.nivell1_Singleton;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -34,8 +34,7 @@ public class Input {
 			
 		}
 		return number;
-		
-			
+
 	}
 	
 	public String readString(String message) {
@@ -49,6 +48,5 @@ public class Input {
 		input.close();
 		
 	}
-		
 		
 }

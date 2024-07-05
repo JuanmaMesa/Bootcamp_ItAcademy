@@ -1,4 +1,4 @@
-package tasca1_Patterns1.nivell1_Singleton;
+package src.tasca1_Patterns1.nivell1_Singleton;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -6,19 +6,11 @@ import java.util.InputMismatchException;
 public class Main {
 
 	public static void main(String[] args) {
-		
-	
+
 	
 	menuPrincipal();
-		
-		
-		
 
-		
-		
 	}
-	
-	
 
 	public static void menuPrincipal() {
 		Undo manager = Undo.getInstance();
@@ -59,42 +51,10 @@ public class Main {
 		
 		
 		}
-			
-			
-			
+
 		}
 		while(number!=4);
 		input.closeInput();
-		
-
 	}
-	
 
-	/*public static int readNumber(String message) {
-	
-		Scanner input = new Scanner(System.in);
-		System.out.println(message);
-		int number = 0;
-		
-		try {
-		number = input.nextInt();
-		input.nextLine();// limpieza buffer
-		return number;
-		}catch(InputMismatchException e) {
-			System.out.println("Tienes que poner un digito.");
-		}return number;
-		
-		
-	
-		
-	}
-	public static String readString(String message) {
-		
-		Scanner input = new Scanner(System.in);
-		System.out.println(message);
-		String command = input.nextLine();
-		
-		return command;
-		
-	}*/
 }
