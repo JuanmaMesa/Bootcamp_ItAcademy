@@ -1,0 +1,1 @@
+package tasca6_generics.n2exercici1;

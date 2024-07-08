@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Sprint1.iml" filepath="$PROJECT_DIR$/.idea/Sprint1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tasca1.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Tasca1.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tasca1.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Tasca1.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bootcamp/Sprint_1/Sprint_1/Tasca1_Herencia/Tasca1_Herencia.iml" filepath="$PROJECT_DIR$/bootcamp/Sprint_1/Sprint_1/Tasca1_Herencia/Tasca1_Herencia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tasca8_Lambdas/Tasca8_Lambdas.iml" filepath="$PROJECT_DIR$/Tasca8_Lambdas/Tasca8_Lambdas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tasca1_herencia/tasca1_herencia.iml" filepath="$PROJECT_DIR$/tasca1_herencia/tasca1_herencia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tasca1_herencia/tasca1_herencia1.iml" filepath="$PROJECT_DIR$/tasca1_herencia/tasca1_herencia1.iml" />
     </modules>
   </component>
 </project>
