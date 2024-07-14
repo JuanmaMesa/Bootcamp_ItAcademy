@@ -18,6 +18,20 @@ public class Input {
         return opcioUsuari;
 
     }
+
+    public static String readString ( String message){
+        String opcioUsuari = "";
+        System.out.println(message);
+        if(input.hasNext()){
+            opcioUsuari = input.nextLine();
+        }else{
+            opcioUsuari = "";
+        }
+        return opcioUsuari;
+    }
+    public static void limpiezaBuffer (){
+        input.nextLine();
+    }
             
   
 }

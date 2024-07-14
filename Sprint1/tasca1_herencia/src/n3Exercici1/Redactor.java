@@ -12,6 +12,14 @@ public class Redactor {
 
     }
 
+    @Override
+    public String toString() {
+        return "Redactor{" +
+                "name='" + name + '\'' +
+                ", dni='" + dni + '\'' +
+                '}';
+    }
+
     public String getName() {
         return name;
     }
@@ -27,4 +35,5 @@ public class Redactor {
     public static void setSalary(int salary) {
         Redactor.salary = salary;
     }
+
 }

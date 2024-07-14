@@ -17,8 +17,8 @@ public class Futbol extends Noticia{
         setPuntuacio(5);
     }
 
-    public Futbol(int puntuacio,  String titular, String competicio, String club, String jugador) {
-        super(puntuacio, titular);
+    public Futbol(String titular, String competicio, String club, String jugador) {
+        super(titular);
         this.competicio = competicio;
         this.club = club;
         this.jugador = jugador;
@@ -27,7 +27,7 @@ public class Futbol extends Noticia{
     }
 
     @Override
-    public void calcularPreuNoticia() {
+    public  void calcularPreuNoticia() {
         int preuNoticiaFutbol = 0;
 
         if(competicio.equalsIgnoreCase("liga")){

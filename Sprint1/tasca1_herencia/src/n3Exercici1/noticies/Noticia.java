@@ -4,9 +4,10 @@ public abstract class Noticia {
     private String titular, text;
     private int puntuacio, preu;
 
-    public Noticia(int puntuacio, String titular) {
+    public Noticia(String titular) {
         text = "";
-        this.puntuacio = puntuacio;
+        puntuacio = 0;
+        preu = 0;
         this.titular = titular;
     }
 
