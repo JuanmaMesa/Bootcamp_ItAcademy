@@ -1,5 +1,6 @@
-- Exercici 1
-  En una redacció de notícies esportives tenen les notícies classificades per esports: futbol, bàsquet, tenis, F1 i motociclisme.
+## Exercici nivel3
+
+En una redacció de notícies esportives tenen les notícies classificades per esports: futbol, bàsquet, tenis, F1 i motociclisme.
 
 La redacció pot tenir més d’un redactor, i de cadascun d’ells volem saber el seu nom, el DNI i el sou. Un cop assignat un DNI, aquest no podrà canviar mai. Tots els redactors tenen el mateix sou, i si en un futur l’empresa pot incrementar-lo, ho farà a tothom per igual. De moment el sou actual és de 1500 €.
 
@@ -126,3 +127,4 @@ A la classe principal s’ha de fer un menú amb les següents opcions:
 6.- Calcular puntuació de la notícia.
 
 7.- Calcular preu-notícia.
+
