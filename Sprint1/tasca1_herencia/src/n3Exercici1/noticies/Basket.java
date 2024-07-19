@@ -17,4 +17,12 @@ public class Basket  extends Noticia {
     public void calcularPuntuacio() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Basket{" +
+                "competicio='" + competicio + '\'' +
+                ", club='" + club + '\'' +
+                '}';
+    }
 }

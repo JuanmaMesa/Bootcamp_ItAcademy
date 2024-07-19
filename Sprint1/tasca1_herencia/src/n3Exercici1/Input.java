@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Input {
     public static final int OPCIO_ERROR = -1;
-    private static Scanner input = new Scanner(System.in);
+    private static  Scanner input = new Scanner(System.in);
 
     public static int readInt(String message){
         int opcioUsuari = 0;

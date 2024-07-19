@@ -13,6 +13,13 @@ public class F1 extends Noticia {
     }
 
     @Override
+    public String toString() {
+        return "F1{" +
+                "escuderia='" + escuderia + '\'' +
+                '}';
+    }
+
+    @Override
     public void calcularPuntuacio() {
 
     }

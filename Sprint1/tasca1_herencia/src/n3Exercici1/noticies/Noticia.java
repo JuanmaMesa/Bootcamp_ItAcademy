@@ -41,4 +41,14 @@ public abstract class Noticia {
     public void setTitular(String titular) {
         this.titular = titular;
     }
+
+    @Override
+    public String toString() {
+        return "Noticia{" +
+                "titular='" + titular + '\'' +
+                ", text='" + text + '\'' +
+                ", puntuacio=" + puntuacio +
+                ", preu=" + preu +
+                '}';
+    }
 }

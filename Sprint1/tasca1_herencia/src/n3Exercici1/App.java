@@ -1,9 +1,6 @@
 package tasca1_herencia.n3Exercici1;
 
-import tasca1_herencia.n3Exercici1.noticies.Basket;
-import tasca1_herencia.n3Exercici1.noticies.F1;
-import tasca1_herencia.n3Exercici1.noticies.Futbol;
-import tasca1_herencia.n3Exercici1.noticies.Tenis;
+import tasca1_herencia.n3Exercici1.noticies.*;
 
 import java.util.ArrayList;
 
@@ -11,7 +8,7 @@ public class App {
     public static final int REDACTOR = 1;
     public static final int ELIMINAR_REDACTOR = 2;
     public static final int INTR_NOTICIA = 3;
-    public static final int ELMINAR_NOTICIA = 4;
+    public static final int ELIMINAR_NOTICIA = 4;
     public static final int TOTES_NOTICIES = 5;
     public static final int PUNTUACIO = 6;
     public static final int PREU = 7;
@@ -19,6 +16,7 @@ public class App {
     public static final int BASQUET = 2;
     public static final int TENIS = 3;
     public static final int FORMULA1 = 4;
+    public static final int SORTIR = 0;
 
 
     private static ArrayList<Redactor> redactoresList = new ArrayList<Redactor>();
@@ -53,14 +51,21 @@ public class App {
                     eliminarRedactor(Input.readString("Que redactor quieres eliminar?"));
                     break;
                 case INTR_NOTICIA:
+                    introducirNoticaRedactor(Input.readString("Dime el nombre del redactor"));
+
                     break;
-                case ELMINAR_NOTICIA:
+                case ELIMINAR_NOTICIA:
                     break;
                 case TOTES_NOTICIES:
+                    verNoticiasRedactor(Input.readString("Dime el nombre del redactor"));
                     break;
                 case PUNTUACIO:
+                    calcularPuntuacio(Input.readString("Dime el nombre del redactor"), Input.readInt("Numero de noticia"));
                     break;
                 case PREU:
+                    break;
+                case SORTIR:
+                    System.out.println("Saliendo de la app...");
                     break;
                 default:
                     System.out.println("solo hay opciones del " + REDACTOR + "-" + PREU);
@@ -88,7 +93,11 @@ public class App {
 
     }
 
-    public static void introduirNoticia(int opcioUsuari) {
+    public static Noticia crearNoticia() {
+        String club = "";
+        String competicio = "";
+        String jugador = "";
+        String escuderia = "";
         String menuNoticia = """
                   Menu noticias
                 1. Futbol
@@ -97,35 +106,75 @@ public class App {
                 4. F1
                 """;
         System.out.println(menuNoticia);
+        int opcioUsuari = Input.readInt("Sobre que deporte es la noticia? 1-4");
         String titular = Input.readString("titular?");
-        switch (opcioUsuari) {
-            case FUTBOL:
-                String competicio = Input.readString("competicio?");
-                String club = Input.readString("club?");
-                String jugador = Input.readString("jugador?");
-                Futbol futbolNoticia = new Futbol(titular, competicio, club,jugador);
-                break;
-            case BASQUET:
-                String clubBasquet = Input.readString("club?");
-                Basket basquetNoticia = new Basket(titular,clubBasquet);
-                break;
-            case TENIS:
-                String competicioTenis = Input.readString("competicio?");
-                String jugadorTenis = Input.readString("jugador?");
-                Tenis tenisNoticia = new Tenis(titular,competicioTenis,jugadorTenis);
-                break;
-            case FORMULA1:
-                String escuderia = Input.readString("Escuderia?");
-                F1 f1 = new F1(titular,escuderia);
-                break;
-            default:
-                System.out.println("Lo siento no hay esa opcion");
+        if (opcioUsuari >= FUTBOL && opcioUsuari <= FORMULA1) {
+            switch (opcioUsuari) {
+                case FUTBOL:
+                    competicio = Input.readString("competicio?");
+                    club = Input.readString("club?");
+                    jugador = Input.readString("jugador?");
+                    return new Futbol(titular, competicio, club, jugador);
 
-
-
+                case BASQUET:
+                    club = Input.readString("club?");
+                    return new Basket(titular, club);
+                case TENIS:
+                    competicio = Input.readString("competicio?");
+                    jugador = Input.readString("jugador?");
+                    return new Tenis(titular, competicio, jugador);
+                case FORMULA1:
+                    escuderia = Input.readString("Escuderia?");
+                    return new F1(titular, escuderia);
+                default:
+                    return new ErrorNoticia();
+            }
+        } else {
+            System.out.println("Opcion no valida");
+            return new ErrorNoticia();
         }
+    }
 
+    public static Redactor buscarRedactor(String name) {
+        for (Redactor redactor : redactoresList) {
+            if (redactor.getName().equalsIgnoreCase(name)) {
+                return redactor;
+            }
+        }
+        return null;
 
     }
 
+
+    public static void introducirNoticaRedactor(String name) {
+        Redactor redactor = buscarRedactor(name);
+        if (redactor == null) {
+            System.out.println("No hay ningun redactor disponible");
+        } else {
+            Noticia noticia = crearNoticia();
+            redactor.introducirNotia(noticia);
+        }
+    }
+
+    public static void verNoticiasRedactor(String name) {
+        Redactor redactor = buscarRedactor(name);
+        if (redactor == null) {
+            System.out.println("No hay ningun redactor disponible");
+        } else {
+            redactor.verNoticias();
+        }
+
+    }
+
+    public static void calcularPuntuacio(String name, int numeroNoticia) {
+        Redactor redactor = buscarRedactor(name);
+        if (redactor == null) {
+            System.out.println("No hay ningun redactor disponible");
+        } else {
+            Noticia noticia = redactor.verUnaNoticia(numeroNoticia -1);
+            System.out.println(noticia.getPuntuacio());
+            noticia.calcularPuntuacio();
+            System.out.println(noticia.getPuntuacio());
+        }
+    }
 }

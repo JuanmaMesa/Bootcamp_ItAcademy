@@ -10,8 +10,7 @@ public class Futbol extends Noticia{
     private static final int PUNTUACIO_EQUIP = 1;
     private static final int PUNTUACIO_JUGADOR = 1;
 
-
-
+    // bloque inicializacion
     {
         setPreu(300);
         setPuntuacio(5);
@@ -41,7 +40,7 @@ public class Futbol extends Noticia{
 
         }
         setPreu(preuNoticiaFutbol);
-        System.out.println(getPreu());
+        System.out.println("El precio de la notica es: "+getPreu());
     }
 
     @Override
@@ -49,10 +48,10 @@ public class Futbol extends Noticia{
         int puntuacioFutbol = 0;
 
         if(competicio.equalsIgnoreCase("liga")){
-            puntuacioFutbol = getPuntuacio()+ PUNTUACIO_LLIGA;
+            puntuacioFutbol = PUNTUACIO_LLIGA;
         }
         if(competicio.equalsIgnoreCase("CHAMPIONS")){
-            puntuacioFutbol = getPuntuacio()+ PUNTUACIO_CHAMPIONS;
+            puntuacioFutbol +=  PUNTUACIO_CHAMPIONS;
         }
         if(club.equalsIgnoreCase("barça") || club.equalsIgnoreCase("madrid")){
             puntuacioFutbol+= PUNTUACIO_EQUIP;
@@ -61,8 +60,9 @@ public class Futbol extends Noticia{
             puntuacioFutbol+= PUNTUACIO_JUGADOR;
 
         }
-        setPuntuacio(puntuacioFutbol);
-        System.out.println(getPuntuacio());
+        System.out.println("puntuacio: "+puntuacioFutbol+ " -puntaucion de la clase: "+ getPuntuacio());
+        setPuntuacio(puntuacioFutbol+ getPuntuacio());
+        System.out.println("La puntuacion de la noticia es: "+ getPuntuacio());
 
     }
 
