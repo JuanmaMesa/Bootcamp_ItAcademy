@@ -75,10 +75,6 @@ public class App {
         }
         while (opcionUsuario != 0);
         int numero = 1;
-        for (Redactor redactor : redactoresList) {
-            System.out.println("Redactor " + numero + ": " + redactor.getName());
-            numero++;
-        }
     }
 
     // Metodos
@@ -178,6 +174,8 @@ public class App {
         } else {
             if (redactor.getBolsaNoticias().isEmpty()) {
                 System.out.println("No tiene noticias para calcular");
+            } else if (redactor.getBolsaNoticias().size() < numeroNoticia) {
+                System.out.println("No tiene esa cantidad de noticias");
             } else {
                 Noticia noticia = redactor.verUnaNoticia(numeroNoticia - 1);
                 int puntuacioBase = noticia.getPuntuacio();
@@ -196,6 +194,8 @@ public class App {
         } else {
             if (redactor.getBolsaNoticias().isEmpty()) {
                 System.out.println("No tiene noticias para calcular");
+            } else if (redactor.getBolsaNoticias().size() < numeroNoticia) {
+                System.out.println("No tiene esa cantidad de noticias");
             } else {
                 Noticia noticia = redactor.verUnaNoticia(numeroNoticia - 1);
                 int precioBase = noticia.getPreu();
@@ -214,13 +214,12 @@ public class App {
         } else {
             if (redactor.getBolsaNoticias().isEmpty()) {
                 System.out.println("No tiene noticias");
-            } else if (redactor.getBolsaNoticias().size() <= numeroNoticia -1) {
-                
-            } else{
-                redactor.getBolsaNoticias().remove(numeroNoticia -1);
+            } else if (redactor.getBolsaNoticias().size() < numeroNoticia) {
+                System.out.println("No tiene esa cantidad de noticias");
+            } else {
+                redactor.getBolsaNoticias().remove(numeroNoticia - 1);
             }
         }
-
     }
 }
 
