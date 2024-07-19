@@ -4,6 +4,8 @@ public class F1 extends Noticia {
     private String escuderia;
     private static final int PUNTUACIO_ESCUDERIA = 2;
     private static final int PREU_ESCUDERIA = 50;
+    private static final String[] LISTA_ESCUDERIAS = {"Ferrari", "Mercedes", "RedBull", "AstonMartin"};
+
     {
         setPreu(100);
         setPuntuacio(4);
@@ -18,8 +20,10 @@ public class F1 extends Noticia {
     public void calcularPreuNoticia() {
         int preuNoticiaf1 = 0;
 
-        if(escuderia.equalsIgnoreCase("mercedes") || escuderia.equalsIgnoreCase("Ferrari")){
-            preuNoticiaf1 = PREU_ESCUDERIA;
+        for (String escuderia: LISTA_ESCUDERIAS){
+            if(escuderia.equalsIgnoreCase(this.escuderia)){
+                preuNoticiaf1 = PREU_ESCUDERIA;
+            }
         }
         setPreu(preuNoticiaf1 + getPreu());
     }
@@ -28,10 +32,10 @@ public class F1 extends Noticia {
     public void calcularPuntuacio() {
         int puntuacioF1 = 0;
 
-        if(escuderia.equalsIgnoreCase("mercedes") || escuderia.equalsIgnoreCase("ferrari")){
+        if (escuderia.equalsIgnoreCase("mercedes") || escuderia.equalsIgnoreCase("ferrari")) {
             puntuacioF1 = PUNTUACIO_ESCUDERIA;
         }
-        setPuntuacio(puntuacioF1+ getPuntuacio());
+        setPuntuacio(puntuacioF1 + getPuntuacio());
     }
 
     @Override

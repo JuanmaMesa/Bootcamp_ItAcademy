@@ -9,6 +9,7 @@ public class Futbol extends Noticia{
     private static final int PUNTUACIO_LLIGA = 2;
     private static final int PUNTUACIO_EQUIP = 1;
     private static final int PUNTUACIO_JUGADOR = 1;
+    private static final String[] NOM_JUGADORS = {"pedri","gavi","carvajal","rodrygo"};
 
     // bloque inicializacion
     {
@@ -33,8 +34,11 @@ public class Futbol extends Noticia{
         if(club.equalsIgnoreCase("barça") || club.equalsIgnoreCase("madrid")){
             preuNoticiaFutbol += PREU_EQUIP;
         }
-        if(jugador.equalsIgnoreCase("Pedri")){
-            preuNoticiaFutbol+= PREU_JUGADOR;
+        // listamos nombres de los jugadores
+        for(String jugador:NOM_JUGADORS){
+            if(jugador.equalsIgnoreCase(this.jugador)){
+                preuNoticiaFutbol+= PREU_JUGADOR;
+            }
         }
         setPreu(preuNoticiaFutbol + getPreu());
     }
