@@ -1,6 +1,6 @@
 ## Exercici nivel3
 
-En una redacció de notícies esportives tenen les notícies classificades per esports: futbol, bàsquet, tenis, F1 i motociclisme.
+En una redacció de notícies esportives tenen les notícies classificades per esports: futbol, bàsquet, tenis, i F1.
 
 La redacció pot tenir més d’un redactor, i de cadascun d’ells volem saber el seu nom, el DNI i el sou. Un cop assignat un DNI, aquest no podrà canviar mai. Tots els redactors tenen el mateix sou, i si en un futur l’empresa pot incrementar-lo, ho farà a tothom per igual. De moment el sou actual és de 1500 €.
 
@@ -14,7 +14,6 @@ De les notícies de tenis s’ha de saber de quina competició(String) parlen i 
 
 De les notícies d'F1 hem de saber a quina escuderia(String) fan referència.
 
-De les notícies de motociclisme s’ha d’indicar de quin equip(String) són.
 
 Les notícies es venen a diferents mitjans. Per saber el preu de cada notícia hem d'implementar un mètode que es diu calcularPreuNoticia().
 
@@ -54,13 +53,6 @@ Notícies d'F1:
 Preu inicial: 100 €
 
 Ferrari o Mercedes: 50 €
-
-
-Notícies de motociclisme:
-
-Preu inicial: 100 €
-
-Honda o Yamaha: 50 €
 
 
 Per calcular les puntuacions de les notícies se segueixen els següents criteris:
@@ -103,13 +95,6 @@ Notícies F1:
 4 punts
 
 Ferrari o Mercedes: 2 punts
-
-
-Notícies de Motociclisme:
-
-3 punts
-
-Honda o Yamaha: 3 punts
 
 
 A la classe principal s’ha de fer un menú amb les següents opcions:

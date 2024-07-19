@@ -17,6 +17,7 @@ public class App {
     public static final int TENIS = 3;
     public static final int FORMULA1 = 4;
     public static final int SORTIR = 0;
+    public static final String NOMBRE_REDACTOR = "Dime el nombre del redactor";
 
 
     private static ArrayList<Redactor> redactoresList = new ArrayList<Redactor>();
@@ -51,18 +52,19 @@ public class App {
                     eliminarRedactor(Input.readString("Que redactor quieres eliminar?"));
                     break;
                 case INTR_NOTICIA:
-                    introducirNoticaRedactor(Input.readString("Dime el nombre del redactor"));
-
+                    introducirNoticaRedactor(Input.readString(NOMBRE_REDACTOR));
                     break;
                 case ELIMINAR_NOTICIA:
+                    eliminarNoticia(Input.readString(NOMBRE_REDACTOR), Input.readInt("Numero noticia"));
                     break;
                 case TOTES_NOTICIES:
-                    verNoticiasRedactor(Input.readString("Dime el nombre del redactor"));
+                    verNoticiasRedactor(Input.readString(NOMBRE_REDACTOR));
                     break;
                 case PUNTUACIO:
-                    calcularPuntuacio(Input.readString("Dime el nombre del redactor"), Input.readInt("Numero de noticia"));
+                    calcularPuntuacio(Input.readString(NOMBRE_REDACTOR), Input.readInt("Numero de noticia"));
                     break;
                 case PREU:
+                    calcularPrecio(Input.readString(NOMBRE_REDACTOR), Input.readInt("Numero de noticia"));
                     break;
                 case SORTIR:
                     System.out.println("Saliendo de la app...");
@@ -107,6 +109,7 @@ public class App {
                 """;
         System.out.println(menuNoticia);
         int opcioUsuari = Input.readInt("Sobre que deporte es la noticia? 1-4");
+        Input.limpiezaBuffer();
         String titular = Input.readString("titular?");
         if (opcioUsuari >= FUTBOL && opcioUsuari <= FORMULA1) {
             switch (opcioUsuari) {
@@ -115,10 +118,10 @@ public class App {
                     club = Input.readString("club?");
                     jugador = Input.readString("jugador?");
                     return new Futbol(titular, competicio, club, jugador);
-
                 case BASQUET:
+                    competicio = Input.readString("competicio?");
                     club = Input.readString("club?");
-                    return new Basket(titular, club);
+                    return new Basket(titular, competicio, club);
                 case TENIS:
                     competicio = Input.readString("competicio?");
                     jugador = Input.readString("jugador?");
@@ -142,7 +145,6 @@ public class App {
             }
         }
         return null;
-
     }
 
 
@@ -161,9 +163,12 @@ public class App {
         if (redactor == null) {
             System.out.println("No hay ningun redactor disponible");
         } else {
-            redactor.verNoticias();
+            if (redactor.getBolsaNoticias().isEmpty()) {
+                System.out.println("El redactor " + redactor.getName() + " no tiene ninguna noticia");
+            } else {
+                redactor.verNoticias();
+            }
         }
-
     }
 
     public static void calcularPuntuacio(String name, int numeroNoticia) {
@@ -171,10 +176,51 @@ public class App {
         if (redactor == null) {
             System.out.println("No hay ningun redactor disponible");
         } else {
-            Noticia noticia = redactor.verUnaNoticia(numeroNoticia -1);
-            System.out.println(noticia.getPuntuacio());
-            noticia.calcularPuntuacio();
-            System.out.println(noticia.getPuntuacio());
+            if (redactor.getBolsaNoticias().isEmpty()) {
+                System.out.println("No tiene noticias para calcular");
+            } else {
+                Noticia noticia = redactor.verUnaNoticia(numeroNoticia - 1);
+                int puntuacioBase = noticia.getPuntuacio();
+                noticia.calcularPuntuacio();
+                System.out.println("Puntuacion base redactor " + puntuacioBase +
+                        "\nPuntuacion base noticia: " + (noticia.getPuntuacio() - puntuacioBase) +
+                        "\nPuntuacion total = " + noticia.getPuntuacio());
+            }
         }
     }
+
+    public static void calcularPrecio(String name, int numeroNoticia) {
+        Redactor redactor = buscarRedactor(name);
+        if (redactor == null) {
+            System.out.println("No hay ningun redactor disponible");
+        } else {
+            if (redactor.getBolsaNoticias().isEmpty()) {
+                System.out.println("No tiene noticias para calcular");
+            } else {
+                Noticia noticia = redactor.verUnaNoticia(numeroNoticia - 1);
+                int precioBase = noticia.getPreu();
+                noticia.calcularPreuNoticia();
+                System.out.println("Precio base redactor " + precioBase +
+                        "\nPrecio base noticia: " + (noticia.getPreu() - precioBase) +
+                        "\nPrecio total = " + noticia.getPreu());
+            }
+        }
+    }
+
+    public static void eliminarNoticia(String name, int numeroNoticia) {
+        Redactor redactor = buscarRedactor(name);
+        if (redactor == null) {
+            System.out.println("No hay ningun redactor disponible");
+        } else {
+            if (redactor.getBolsaNoticias().isEmpty()) {
+                System.out.println("No tiene noticias");
+            } else if (redactor.getBolsaNoticias().size() <= numeroNoticia -1) {
+                
+            } else{
+                redactor.getBolsaNoticias().remove(numeroNoticia -1);
+            }
+        }
+
+    }
 }
+

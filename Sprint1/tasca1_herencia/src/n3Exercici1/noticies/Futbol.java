@@ -2,7 +2,7 @@ package tasca1_herencia.n3Exercici1.noticies;
 
 public class Futbol extends Noticia{
     private String competicio, club, jugador;
-    private static final int PREU_CHAMPIONS = 100;
+    private static final int PREU_LLIGA = 100;
     private static final int PREU_EQUIP = 100;
     private static final int PREU_JUGADOR = 50;
     private static final int PUNTUACIO_CHAMPIONS = 3;
@@ -21,8 +21,6 @@ public class Futbol extends Noticia{
         this.competicio = competicio;
         this.club = club;
         this.jugador = jugador;
-
-
     }
 
     @Override
@@ -30,17 +28,15 @@ public class Futbol extends Noticia{
         int preuNoticiaFutbol = 0;
 
         if(competicio.equalsIgnoreCase("liga")){
-            preuNoticiaFutbol = getPreu()+ PREU_CHAMPIONS;
+            preuNoticiaFutbol = PREU_LLIGA;
         }
         if(club.equalsIgnoreCase("barça") || club.equalsIgnoreCase("madrid")){
             preuNoticiaFutbol += PREU_EQUIP;
         }
         if(jugador.equalsIgnoreCase("Pedri")){
             preuNoticiaFutbol+= PREU_JUGADOR;
-
         }
-        setPreu(preuNoticiaFutbol);
-        System.out.println("El precio de la notica es: "+getPreu());
+        setPreu(preuNoticiaFutbol + getPreu());
     }
 
     @Override
@@ -60,10 +56,7 @@ public class Futbol extends Noticia{
             puntuacioFutbol+= PUNTUACIO_JUGADOR;
 
         }
-        System.out.println("puntuacio: "+puntuacioFutbol+ " -puntaucion de la clase: "+ getPuntuacio());
         setPuntuacio(puntuacioFutbol+ getPuntuacio());
-        System.out.println("La puntuacion de la noticia es: "+ getPuntuacio());
-
     }
 
     @Override
